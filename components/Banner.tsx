@@ -25,6 +25,40 @@ const Banner = ({ netflixOriginals }: Props) => {
   }, [netflixOriginals])
 
   // console.log(movie);
+
+  const trimMovieDescription = (movieOverview: String) => {
+    let maxLimit = 170;
+    if (movieOverview.length <= maxLimit) {
+      return movieOverview;
+    }
+  
+    const trimmedString = movieOverview.substring(0, maxLimit);
+  
+    if (trimmedString.lastIndexOf('.') >= 0) {
+      return trimmedString.substring(0, trimmedString.lastIndexOf('.') + 1);
+    } else {
+      const words = trimmedString.trim().split(/\s+/);
+      let result = '';
+      let count = 0;
+  
+      for (const word of words) {
+        if (count + word.length + 1 <= maxLimit) {
+          result += word + ' ';
+          count += word.length + 1;
+        } else {
+          break;
+        }
+      }
+
+      result = result.trim();
+      if (result[result.length - 1] !== '.') {
+        result += '...';
+      }
+  
+      return result;
+    }
+  }
+  
   
   
   return (
@@ -43,7 +77,7 @@ const Banner = ({ netflixOriginals }: Props) => {
           {movie?.title || movie?.name || movie?.original_name}
         </h1>
         <p className='max-w-xs text-shadow-md text-xs md:max-w-lg md:text-lg lg:max-w-2xl lg:text-2xl'>
-          {movie?.overview}
+          { movie?.overview && trimMovieDescription(movie?.overview)}
         </p>
 
         <div className='flex space-x-3'>

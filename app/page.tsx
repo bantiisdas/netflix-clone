@@ -44,14 +44,14 @@ export default async function Home() {
   
     
 
-  console.log(netflixOriginals.results);
+  // console.log(netflixOriginals.results);
 
   return (
     <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
       <Header/>
       <div className='relative pt-7  pl-4 pb-24 lg:space-y-24 lg:pl-16'>
         <Banner netflixOriginals={netflixOriginals.results}/>
-        <section className='space-y-24'>
+        <section className='md:space-y-24'>
           <Row title="Tranding Now" movies={trendingNow.results}/>
           <Row title="Top Rated" movies={topRated.results}/>
           <Row title="Action Thrillers" movies={actionMovies.results}/>
