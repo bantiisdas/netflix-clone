@@ -1,8 +1,10 @@
 import { Banner, Header, Row } from '@/components'
+import useAuth from '@/hooks/useAuth';
 import { Movie } from '@/typing'
 // import { fetchMovies } from '@/utils/requests';
 import requests from '@/utils/requests'
 import Image from 'next/image'
+import { useRecoilValue } from 'recoil';
 
 
 interface Props {
@@ -41,8 +43,10 @@ export default async function Home() {
     fetch(requests.fetchDocumentaries).then((res) => res.json()),
   ])
 
-  
-    
+  // const { loading } = useAuth();
+  // if(loading) return "Loading";
+
+  // const showModal = useRecoilValue()
 
   // console.log(netflixOriginals.results);
 
