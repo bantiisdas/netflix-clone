@@ -1,7 +1,10 @@
+"use client"
+
 import { AuthProvider } from '@/hooks/useAuth'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { RecoilRoot } from 'recoil'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} ><AuthProvider>{children}</AuthProvider></body>
+      <body className={inter.className} >
+        <RecoilRoot>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </RecoilRoot>
+      </body>
     </html>
   )
 }

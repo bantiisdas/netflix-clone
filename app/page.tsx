@@ -1,4 +1,7 @@
-import { Banner, Header, Row } from '@/components'
+
+
+import { modalState } from '@/atoms/modalAtom';
+import { Banner, Header, MainContents, Row } from '@/components'
 import useAuth from '@/hooks/useAuth';
 import { Movie } from '@/typing'
 // import { fetchMovies } from '@/utils/requests';
@@ -46,27 +49,23 @@ export default async function Home() {
   // const { loading } = useAuth();
   // if(loading) return "Loading";
 
-  // const showModal = useRecoilValue()
+  // const showModal = useRecoilValue(modalState)
 
   // console.log(netflixOriginals.results);
 
   return (
     <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
       <Header/>
-      <div className='relative pt-7  pl-4 pb-24 lg:space-y-24 lg:pl-16'>
-        <Banner netflixOriginals={netflixOriginals.results}/>
-        <section className='md:space-y-24'>
-          <Row title="Tranding Now" movies={trendingNow.results}/>
-          <Row title="Top Rated" movies={topRated.results}/>
-          <Row title="Action Thrillers" movies={actionMovies.results}/>
-          {/* My List */}
-          
-          <Row title="Comedies" movies={comedyMovies.results}/>
-          <Row title="Scary Movies" movies={horrorMovies.results}/>
-          <Row title="Romance Movies" movies={romanceMovies.results}/>
-          <Row title="Documentaries" movies={documentaries.results}/>
-        </section>
-      </div>
+      <MainContents 
+        netflixOriginals={netflixOriginals.results}
+        actionMovies={actionMovies.results}
+        comedyMovies={comedyMovies.results}
+        documentaries={documentaries.results}
+        horrorMovies={horrorMovies.results}
+        romanceMovies={romanceMovies.results}
+        topRated={topRated.results}
+        trendingNow={trendingNow.results}
+        />
     </main>
   )
 }
