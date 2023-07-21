@@ -7,13 +7,14 @@ import MuiModal from "@mui/material/Modal";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Element } from "@/typing";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/lazy";
 
 const Modal = () => {
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [movie, setMovie] = useRecoilState(movieState);
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [mute, setMute] = useState(false);
 
   const handleClose = () => {
     setShowModal(false);
@@ -66,7 +67,7 @@ const Modal = () => {
                 height="100%"
                 style={{ position: "absolute", top: "0", left: "0"}}
                 playing
-                
+                muted={mute}
             />
         </div>
       </>
