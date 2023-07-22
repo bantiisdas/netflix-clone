@@ -139,7 +139,7 @@ export default function Home() {
   // console.log(netflixOriginals.results);
 
   return (
-    
+    <RecoilRoot>
     <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
       <Header/>
       <MainContents 
@@ -153,7 +153,7 @@ export default function Home() {
         trendingNow={trendingNow}
         />
     </main>
-    
+    </RecoilRoot>
   )
 }
 
