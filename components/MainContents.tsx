@@ -46,9 +46,9 @@ const MainContents = ({
             <Row title="Romance Movies" movies={romanceMovies}/>
             <Row title="Documentaries" movies={documentaries}/>
           </section>
-        </div>
-        {showModal && <Modal/>}
-      </>
+      </div>
+      {showModal && <Modal/>}
+    </>
   )
 }
 
