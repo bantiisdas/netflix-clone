@@ -82,23 +82,23 @@ const Modal = () => {
             playing
             muted={muted}
           />
-          <div className="absolute bottom-10 flex w-full justify-end items-center sm:justify-between px-10">
-            {!isMobile &&
-              (<div className="flex space-x-2">
-                <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
-                  <FaPlay className="xs:h-7 xs:w-7 text-black"/>
-                  Play
-                </button>
+          <div className={`absolute bottom-10 flex w-full justify-end items-center xs:justify-between px-10`}>
+            
+            <div className="hidden xs:flex space-x-2">
+              <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
+                <FaPlay className="xs:h-7 xs:w-7 text-black"/>
+                Play
+              </button>
 
-                <button className="modalButton">
-                  <PlusIcon className="h-7 w-7"/>
-                </button>
+              <button className="modalButton">
+                <PlusIcon className="h-7 w-7"/>
+              </button>
 
-                <button className="modalButton">
-                  <HandThumbUpIcon className="h-7 w-7"/>
-                </button>
-              </div>)
-            }
+              <button className="modalButton">
+                <HandThumbUpIcon className="h-7 w-7"/>
+              </button>
+            </div>
+            
             <button className="modalButton" onClick={() => setMuted(!muted)}>
               {muted? (
                 <FaVolumeOff className="h-6 w-6"/>
@@ -110,7 +110,12 @@ const Modal = () => {
         </div>
 
         <div className="flex space-x-16 rounded-b-md bg-[#181818] px-10 py-8">
+         
+
           <div className="space-y-6 text-lg">
+          <div className="flex w-full justify-center items-center">
+            <p className="text-2xl">{movie?.name || movie?.title}</p>
+          </div>
             <div className="flex items-center space-x-2 text-sm">
               <p className="font-semibold text-green-400">{movie?.vote_average *10}% Match</p>
               <p className="font-light">{movie?.release_date || movie?.first_air_date}</p>
