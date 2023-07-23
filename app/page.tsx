@@ -1,7 +1,7 @@
 "use client";
 
 import { modalState } from '@/atoms/modalAtom';
-import { Banner, Header, MainContents, Modal, Row } from '@/components'
+import { Banner, Header, MainContents, Row } from '@/components'
 import useAuth from '@/hooks/useAuth';
 import { Movie } from '@/typing'
 // import { fetchMovies } from '@/utils/requests';
@@ -76,29 +76,23 @@ export default function Home() {
     fetchData();
   }, [])
   
-  const showModal = useRecoilValue(modalState)
-
+  
   return (
-    // <RecoilRoot>
+    <RecoilRoot>
     <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
       <Header/>
-      <div className='relative pt-7  pl-4 pb-24 lg:space-y-24 lg:pl-16'>
-          <Banner netflixOriginals={netflixOriginals}/>
-          <section className='md:space-y-24'>
-            <Row title="Tranding Now" movies={trendingNow}/>
-            <Row title="Top Rated" movies={topRated}/>
-            <Row title="Action Thrillers" movies={actionMovies}/>
-            {/* My List */}
-            
-            <Row title="Comedies" movies={comedyMovies}/>
-            <Row title="Scary Movies" movies={horrorMovies}/>
-            <Row title="Romance Movies" movies={romanceMovies}/>
-            <Row title="Documentaries" movies={documentaries}/>
-          </section>
-      </div>
-      {showModal && <Modal/>}
+      <MainContents 
+        netflixOriginals={netflixOriginals}
+        actionMovies={actionMovies}
+        comedyMovies={comedyMovies}
+        documentaries={documentaries}
+        horrorMovies={horrorMovies}
+        romanceMovies={romanceMovies}
+        topRated={topRated}
+        trendingNow={trendingNow}
+        />
     </main>
-    //{/* </RecoilRoot> */}
+    </RecoilRoot>
   )
 }
 
