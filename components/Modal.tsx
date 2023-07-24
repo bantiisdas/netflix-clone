@@ -80,6 +80,7 @@ const Modal = () => {
             height="100%"
             style={{ position: "absolute", top: "0", left: "0" }}
             playing
+            controls
             muted={muted}
           />
           <div className={`absolute bottom-10 flex w-full justify-end items-center xs:justify-between px-10`}>

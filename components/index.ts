@@ -4,6 +4,7 @@ import Row from "./Row";
 import Thumbnail from "./Thumbnail";
 import MainContents from "./MainContents";
 import Modal from "./Modal";
+import Movies from "./Movies";
 
 export {
     Header,
@@ -12,4 +13,5 @@ export {
     Thumbnail,
     MainContents,
     Modal,
+    Movies,
 }

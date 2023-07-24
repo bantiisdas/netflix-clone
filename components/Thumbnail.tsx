@@ -20,13 +20,15 @@ const Thumbnail = ({ movie }: Props) => {
       onClick={() => {
         setCurrentMovie(movie)
         setShowModal(true)
+        console.log(movie);
+        
       }}
     >
         <Image
-            src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path || movie.poster_path}`}
-            alt="Movie"
-            fill
-            className="rounded-sm object-cover md:rounded"
+          src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path || movie.poster_path}`}
+          alt="Movie"
+          fill
+          className="rounded-sm object-cover md:rounded"
         />
     </div>
   )
