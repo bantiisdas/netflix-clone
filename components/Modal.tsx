@@ -23,12 +23,13 @@ const Modal = () => {
   const handleClose = () => {
     setShowModal(false);
   };
-  // console.log(movie);
+  console.log(movie);
 
   useEffect(() => {
     if (!movie) return;
 
     async function fetchMovie() {
+
       const data = await fetch(
         `https://api.themoviedb.org/3/${
           movie?.media_type === "tv" ? "tv" : "movie"
@@ -38,6 +39,33 @@ const Modal = () => {
       )
         .then((response) => response.json())
         .catch((err) => console.log(err.message));
+
+      //---------------------------------------
+
+      // const url = `ttps://api.themoviedb.org/3/${
+      //   movie?.media_type === "tv" ? "tv" : "movie"
+      // }/${movie?.id}?api_key=${
+      //   process.env.NEXT_PUBLIC_API_KEY
+      // }&language=en-US&append_to_response=videos`
+
+      // console.log(url);
+      
+      // const data = await fetch(
+      //   url
+      // )
+      //   .then((response) => response.json())
+      //   .catch((err) => console.log(err.message));
+
+
+      // const data = await fetch(
+      //   `https://api.themoviedb.org/3/tv/${movie?.id}?api_key=${
+      //     process.env.NEXT_PUBLIC_API_KEY
+      //   }&language=en-US&append_to_response=videos`
+      // )
+      //   .then((response) => response.json())
+      //   .catch((err) => console.log(err.message));
+
+      //---------------------------------------
 
       if (data?.videos) {
         const index = data.videos.results.findIndex(
@@ -52,7 +80,7 @@ const Modal = () => {
     }
 
     const screenWidth = window.innerWidth;
-    console.log(screenWidth)
+    // console.log(screenWidth)
     if(screenWidth<=475){
       setIsMobile(true)
     }
@@ -61,8 +89,9 @@ const Modal = () => {
     }
     fetchMovie();
   }, [movie]);
-
-  //   console.log(trailer);
+    console.log(movie?.media_type);
+    
+    console.log(trailer);
 
   return (
     <MuiModal open={showModal} onClose={handleClose} className="fixed !top-0 xs:!top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide">

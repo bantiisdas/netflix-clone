@@ -21,6 +21,7 @@ const Movies = ({ movies }: Props) => {
           ))}
         </div>
       </div>
+      
       {showModal && <Modal/>}
     </>
   );

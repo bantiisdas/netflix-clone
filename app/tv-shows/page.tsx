@@ -15,10 +15,13 @@ const page = () => {
 
   const fetchMovies = async () => {
    
-    const data = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=0af5fa8e782539fba3c0878860e6beb0&language=en-US&page=${page}`)
+    const data = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=0af5fa8e782539fba3c0878860e6beb0&language=en-US&page=${page}&with_networks=213`)
     .then((response) => response.json())
     .catch((err) => console.log(err.message));
     
+    data.results.forEach((item: Movie) => {
+      item.media_type = "tv";
+    });
     if(!movies){
       setMovies(data.results)
     }
@@ -26,17 +29,19 @@ const page = () => {
       setMovies([...movies, ...data.results]);
     }
     console.log(movies);
-    // console.log(movies);
     
   }
 
   const loadMoreMovies = async () => {
 
-    // const data = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=0af5fa8e782539fba3c0878860e6beb0&language=en-US&page=${page+1}`)
+    // const data = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=0af5fa8e782539fba3c0878860e6beb0&language=en-US&page=${page+1}&with_networks=213`)
     // .then((response) => response.json())
     // .catch((err) => console.log(err.message));
     
-    
+    // data.results.forEach((item: Movie) => {
+    //   item.media_type = "tv";
+    // });
+
     // setMovies([...movies, ...data.results]);
     setPage(page+1);
     // console.log(movies);
