@@ -5,6 +5,7 @@ import Thumbnail from "./Thumbnail";
 import MainContents from "./MainContents";
 import Modal from "./Modal";
 import Movies from "./Movies";
+import BasicMenu from "./BasicMenu";
 
 export {
     Header,
@@ -14,4 +15,5 @@ export {
     MainContents,
     Modal,
     Movies,
+    BasicMenu
 }
