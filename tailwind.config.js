@@ -22,6 +22,17 @@ module.exports = {
 
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
+      'cmd': '500px',
+      // => @media (min-width: 640px) { ... }
+
+      'clg': '800px',
+      // => @media (min-width: 1024px) { ... }
+
+      'cxl': '1000px',
+
+      'c2xl': '1400px',
+      'mobile': '360px',
+      // => @media (min-width: 1280px) { ... }
     },
     extend: {
       backgroundImage: {

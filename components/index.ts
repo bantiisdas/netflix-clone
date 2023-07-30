@@ -6,6 +6,7 @@ import MainContents from "./MainContents";
 import Modal from "./Modal";
 import Movies from "./Movies";
 import BasicMenu from "./BasicMenu";
+import GridCard from "./GridCard"
 
 export {
     Header,
@@ -15,5 +16,6 @@ export {
     MainContents,
     Modal,
     Movies,
-    BasicMenu
+    BasicMenu,
+    GridCard,
 }

@@ -22,9 +22,6 @@ const page = () => {
     .then((response) => response.json())
     .catch((err) => console.log(err.message));
     
-    data.results.forEach((item: Movie) => {
-      item.media_type = "tv";
-    });
     if(!movies){
       setMovies(data.results)
     }
