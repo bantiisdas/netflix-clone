@@ -23,7 +23,7 @@ const Modal = () => {
   const handleClose = () => {
     setShowModal(false);
   };
-  console.log(movie);
+  // console.log(movie);
 
   useEffect(() => {
     if (!movie) return;
@@ -89,9 +89,9 @@ const Modal = () => {
     }
     fetchMovie();
   }, [movie]);
-    console.log(movie?.media_type);
+    // console.log(movie?.media_type);
     
-    console.log(trailer);
+    // console.log(trailer);
 
   return (
     <MuiModal open={showModal} onClose={handleClose} className="fixed !top-0 xs:!top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide">

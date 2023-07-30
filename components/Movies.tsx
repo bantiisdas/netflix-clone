@@ -3,24 +3,58 @@ import Thumbnail from "./Thumbnail";
 import Modal from "./Modal";
 import { useRecoilValue } from "recoil";
 import { modalState } from "@/atoms/modalAtom";
-import { GridCard } from ".";
+import { GridCard, Row } from ".";
+
+// interface Props {
+//   movies: Movie[];
+// }
 
 interface Props {
-  movies: Movie[];
+  topRated : Movie[];
+  actionMovies : Movie[];
+  comedyMovies : Movie[];
+  horrorMovies : Movie[];
+  romanceMovies : Movie[];
+  documentaries : Movie[];
+  sciFiMovies : Movie[];
+  mysteryMovies : Movie[];
+  warMovies : Movie[];
+  crimeMovies : Movie[];
+  animatedMovies : Movie[];
 }
 
-const Movies = ({ movies }: Props) => {
+const Movies = ({ 
+  topRated,
+  actionMovies,
+  comedyMovies,
+  horrorMovies,
+  romanceMovies,
+  documentaries,
+  sciFiMovies,
+  mysteryMovies,
+  warMovies,
+  crimeMovies,
+  animatedMovies, }: Props) => {
 
     const showModal = useRecoilValue(modalState);
 
   return (
     <>
-      <div className="relative mt-20 pt-7 pr-6 mobile:pr-20 cmd:pr-4 pl-4 pb-24 lg:space-y-24 lg:px-8">
-      <div className="grid grid-cols-1 cmd:grid-cols-2 clg:grid-cols-3 cxl:grid-cols-4 c2xl:grid-cols-5 gap-4">
-          {movies.map((movie: Movie) => (
-            <GridCard key={movie.id} movie={movie} />
-          ))}
-        </div>
+      <div className='relative pt-7 mt-20 pl-4 pb-24 lg:space-y-24 lg:pl-16'>
+          <section className='md:space-y-24'>
+            <Row title="Sci-Fi Movies" movies={sciFiMovies}/>
+            <Row title="Mystery Movies" movies={mysteryMovies}/>
+            <Row title="War Movies" movies={warMovies}/>
+            <Row title="Crime" movies={crimeMovies}/>
+            <Row title="Animated" movies={animatedMovies}/>
+            
+            {/* <Row title="Top Rated" movies={topRated}/>
+            <Row title="Action Thrillers" movies={actionMovies}/>
+            <Row title="Comedies" movies={comedyMovies}/>
+            <Row title="Scary Movies" movies={horrorMovies}/>
+            <Row title="Romance Movies" movies={romanceMovies}/>
+            <Row title="Documentaries" movies={documentaries}/> */}
+          </section>
       </div>
       
       {showModal && <Modal/>}

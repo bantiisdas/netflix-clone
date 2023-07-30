@@ -1,58 +1,71 @@
-"use client"
+"use client";
 
-import { Header, Movies, Thumbnail } from "@/components";
-import { Movie } from "@/typing";
-import { useEffect, useState } from "react";
-import { RecoilRoot } from "recoil";
+import { modalState } from '@/atoms/modalAtom';
+import { Banner, Header, MainContents, NewPopular, Row } from '@/components'
+import useAuth from '@/hooks/useAuth';
+import { Movie } from '@/typing'
+// import { fetchMovies } from '@/utils/requests';
+import requests from '@/utils/requests'
+import Image from 'next/image'
+import { useEffect, useState } from 'react';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 
-interface Props {
-  movies: Movie[];
-}
 
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY
 
-const page = () => {
+export default function Home() {
 
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [page, setPage] = useState<number>(1);
+  const [nowPlaying, setNowPlaying] = useState([]);
+  const [popular, setPopular] = useState([]);
+  const [topRated, setTopRated] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+  const [trendingNow, setTrendingNow] = useState([]);
 
-  const fetchMovies = async () => {
-   
-    const data = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US&page=${page}`)
-    .then((response) => response.json())
-    .catch((err) => console.log(err.message));
-    
-    if(!movies){
-      setMovies(data.results)
+
+  const fetchData = async () => {
+    try {
+      const [
+              nowPlaying,
+              popular,
+              topRated,
+              upcoming,
+              trendingNow
+            ] = await Promise.all([
+              fetch(requests.fetchNowPlaying).then((res) => res.json()),
+              fetch(requests.fetchPopular).then((res) => res.json()),
+              fetch(requests.fetchTopRated).then((res) => res.json()),
+              fetch(requests.fetchUpcoming).then((res) => res.json()),
+              fetch(requests.fetchTrending).then((res) => res.json()),
+            ])
+            setNowPlaying(nowPlaying.results);
+            setPopular(popular.results);
+            setTopRated(topRated.results);
+            setUpcoming(upcoming.results);
+            setTrendingNow(trendingNow.results);
+            
+    } catch (error) {
+      console.error();
     }
-    else{
-      setMovies([...movies, ...data.results]);
-    }
-    console.log(movies);
-    
-  }
-
-  const loadMoreMovies = async () => {
-    setPage(page+1);
   }
 
   useEffect(() => {
-    fetchMovies();
-  }, [page])
+    fetchData();
+  }, [])
   
-
-    
+  
   return (
     <RecoilRoot>
-      <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
-        <Header/>
-        <Movies movies={movies}/>
-        <div className="flex justify-center items-center pb-5">
-          <button className="text-black bg-white p-2 rounded" onClick={loadMoreMovies}>Load More</button>
-        </div>
-      </main>
+    <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
+      <Header/>
+      <NewPopular 
+        nowPlaying={nowPlaying}
+        popular={popular}
+        topRated={topRated}
+        upcoming={upcoming}
+        trendingNow={trendingNow}
+      />
+    </main>
     </RecoilRoot>
   )
 }
 
-export default page
+

@@ -7,6 +7,8 @@ import Modal from "./Modal";
 import Movies from "./Movies";
 import BasicMenu from "./BasicMenu";
 import GridCard from "./GridCard"
+import TvShows from "./TvShows";
+import NewPopular from "./NewPopular";
 
 export {
     Header,
@@ -18,4 +20,6 @@ export {
     Movies,
     BasicMenu,
     GridCard,
+    TvShows,
+    NewPopular
 }
