@@ -9,6 +9,7 @@ import BasicMenu from "./BasicMenu";
 import GridCard from "./GridCard"
 import TvShows from "./TvShows";
 import NewPopular from "./NewPopular";
+import GridView from "./GridView";
 
 export {
     Header,
@@ -21,5 +22,6 @@ export {
     BasicMenu,
     GridCard,
     TvShows,
-    NewPopular
+    NewPopular,
+    GridView
 }
