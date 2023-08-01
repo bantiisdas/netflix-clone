@@ -3,7 +3,7 @@ import Thumbnail from "./Thumbnail";
 import Modal from "./Modal";
 import { useRecoilValue } from "recoil";
 import { gridMovieState, modalState } from "@/atoms/modalAtom";
-import { GridCard, GridView, Row } from ".";
+import { Row } from ".";
 import { useState } from "react";
 
 // interface Props {
@@ -22,7 +22,7 @@ const TvShows = ({
     nowPlaying,
     popular,
     topRated,
-    upcoming ,
+    upcoming,
     trendingNow }: Props) => {
 
     const showModal = useRecoilValue(modalState);
@@ -36,14 +36,14 @@ const TvShows = ({
   return (
     <>
       <div className='relative pt-7 mt-20 pl-4 pb-24 lg:space-y-24 lg:pl-16'>
-          <section className={`${hideRows && "hidden"} md:space-y-24`}>
-            <Row title="Now Playing" movies={nowPlaying} rowClick={rowClick}/>
-            <Row title="Tranding Now" movies={trendingNow} rowClick={rowClick}/>
-            <Row title="Popular" movies={popular} rowClick={rowClick}/>
-            <Row title="Top Rated" movies={topRated} rowClick={rowClick}/>
-            <Row title="Upcoming" movies={upcoming} rowClick={rowClick}/>
+          <section className={`md:space-y-24`}>
+            <Row title="Now Playing" movies={nowPlaying} search="nowPlaying" rowClick={rowClick}/>
+            <Row title="Tranding Now" movies={trendingNow} search="trendingNow" rowClick={rowClick}/>
+            <Row title="Popular" movies={popular} search="popular" rowClick={rowClick}/>
+            <Row title="Top Rated" movies={topRated} search="topRated" rowClick={rowClick}/>
+            <Row title="Upcoming" movies={upcoming} search="upcoming" rowClick={rowClick}/>
           </section>
-          <GridView gridMovies={gridMovies}/>
+          {/* <GridView gridMovies={gridMovies}/> */}
       </div>
       
       {showModal && <Modal/>}

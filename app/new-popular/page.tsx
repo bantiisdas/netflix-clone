@@ -34,7 +34,7 @@ export default function Home() {
               fetch(requests.fetchPopular).then((res) => res.json()),
               fetch(requests.fetchTopRated).then((res) => res.json()),
               fetch(requests.fetchUpcoming).then((res) => res.json()),
-              fetch(requests.fetchTrending).then((res) => res.json()),
+              fetch(requests.fetchTrendingNow).then((res) => res.json()),
             ])
             setNowPlaying(nowPlaying.results);
             setPopular(popular.results);

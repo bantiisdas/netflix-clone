@@ -6,19 +6,20 @@ import Thumbnail from "./Thumbnail";
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { gridMovieState } from "@/atoms/modalAtom";
-import { green } from "@mui/material/colors";
+import { useRouter } from 'next/navigation'
 
 interface Props {
     title: String;
     movies: Movie[];
+    search: string;
     rowClick: () => void;
 }
 
-const Row = ({title, movies, rowClick}: Props) => {
+const Row = ({title, movies, search, rowClick}: Props) => {
 
     const [gridMovies, setGridMovies] = useRecoilState(gridMovieState);
     
-    
+    const router = useRouter()
 
     const rowRef = useRef<HTMLDivElement>(null);
     const [isMoved, setIsMoved] = useState(false);
@@ -45,6 +46,7 @@ const Row = ({title, movies, rowClick}: Props) => {
                 onClick={() => {
                     rowClick();
                     setGridMovies(movies)
+                    router.push(`${search}`)
                 }}
                 
             >See More</button>

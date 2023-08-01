@@ -31,3 +31,30 @@ export interface Genre {
       | 'Trailer'
       | 'Teaser'
   }
+
+  export interface Requests {
+    fetchTrending: string;
+    fetchNetflixOriginals: string;
+    fetchTopRated: string;
+    fetchActionMovies: string;
+    fetchComedyMovies: string;
+    fetchHorrorMovies: string;
+    fetchRomanceMovies: string;
+    fetchDocumentaries: string;
+    fetchSciFiMovies: string;
+    fetchMysteryMovies: string;
+    fetchWarMovies: string;
+    fetchCrimeMovies: string;
+    fetchAnimatedMovies: string;
+    fetchSciFiFantTv: string;
+    fetchActionTv: string;
+    fetchDramaTv: string;
+    fetchCrimeTv: string;
+    fetchAnimatedTv: string;
+    fetchMysteryTv: string;
+    fetchComedyTv: string;
+    fetchWarPoliticsTv: string;
+    fetchNowPlaying: string;
+    fetchPopular: string;
+    fetchUpcoming: string;
+  }

@@ -66,7 +66,8 @@ const Modal = () => {
       //   .catch((err) => console.log(err.message));
 
       //---------------------------------------
-
+        console.log(data.videos.results);
+        
       if (data?.videos) {
         const index = data.videos.results.findIndex(
           (element: Element) => element.type === "Trailer"
@@ -81,17 +82,17 @@ const Modal = () => {
 
     const screenWidth = window.innerWidth;
     // console.log(screenWidth)
-    if(screenWidth<=475){
-      setIsMobile(true)
-    }
-    else{
-      setIsMobile(false)
-    }
+    // if(screenWidth<=475){
+    //   setIsMobile(true)
+    // }
+    // else{
+    //   setIsMobile(false)
+    // }
     fetchMovie();
   }, [movie]);
     // console.log(movie?.media_type);
     
-    // console.log(trailer);
+    console.log(trailer);
 
   return (
     <MuiModal open={showModal} onClose={handleClose} className="fixed !top-0 xs:!top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide">

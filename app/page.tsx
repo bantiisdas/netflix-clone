@@ -51,7 +51,7 @@ export default function Home() {
               documentaries,
             ] = await Promise.all([
               fetch(requests.fetchNetflixOriginals).then((res) => res.json()),
-              fetch(requests.fetchTrending).then((res) => res.json()),
+              fetch(requests.fetchTrendingNow).then((res) => res.json()),
               fetch(requests.fetchTopRated).then((res) => res.json()),
               fetch(requests.fetchActionMovies).then((res) => res.json()),
               fetch(requests.fetchComedyMovies).then((res) => res.json()),

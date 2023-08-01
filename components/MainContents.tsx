@@ -7,7 +7,7 @@ import { Movie } from '@/typing';
 import { useRecoilValue } from 'recoil';
 import { gridMovieState, modalState } from '@/atoms/modalAtom';
 import Modal from './Modal';
-import GridView from './GridView';
+// import GridView from './GridView';
 
 interface Props {
     netflixOriginals : Movie[];
@@ -42,18 +42,18 @@ const MainContents = ({
     <>
       <div className='relative pt-7  pl-4 pb-24 lg:space-y-24 lg:pl-16'>
           <Banner netflixOriginals={netflixOriginals}/>
-          <section className={`${hideRows && "hidden"} md:space-y-24`}>
-            <Row title="Tranding Now" movies={trendingNow} rowClick={rowClick}/>
-            <Row title="Top Rated" movies={topRated} rowClick={rowClick}/>
-            <Row title="Action Thrillers" movies={actionMovies} rowClick={rowClick}/>
+          <section className={`md:space-y-24`}>
+            <Row title="Tranding Now" movies={trendingNow} search="trendingNow" rowClick={rowClick}/>
+            <Row title="Top Rated" movies={topRated} search="topRated" rowClick={rowClick}/>
+            <Row title="Action Thrillers" movies={actionMovies} search="actionMovies" rowClick={rowClick}/>
             {/* My List */}
             
-            <Row title="Comedies" movies={comedyMovies} rowClick={rowClick}/>
-            <Row title="Scary Movies" movies={horrorMovies} rowClick={rowClick}/>
-            <Row title="Romance Movies" movies={romanceMovies} rowClick={rowClick}/>
-            <Row title="Documentaries" movies={documentaries} rowClick={rowClick}/>
+            <Row title="Comedies" movies={comedyMovies} search="comedyMovies" rowClick={rowClick}/>
+            <Row title="Scary Movies" movies={horrorMovies} search="horrorMovies" rowClick={rowClick}/>
+            <Row title="Romance Movies" movies={romanceMovies} search="romanceMovies" rowClick={rowClick}/>
+            <Row title="Documentaries" movies={documentaries} search="documentaries" rowClick={rowClick}/>
           </section>
-          <GridView gridMovies={gridMovies}/>
+          {/* <GridView gridMovies={gridMovies}/> */}
       </div>
       {showModal && <Modal/>}
     </>
