@@ -31,8 +31,6 @@ export default function Page() {
 
   const fetchMovies = async () => {
     
-    
-    
     const response = await fetch(
       requests[query]
     );
@@ -59,13 +57,22 @@ export default function Page() {
   }, [pathname, searchParams])
 
 //  console.log(query);
+console.log(movies);
+
  
   return (
     <RecoilRoot>
-    <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
-      <Header/>
-      <GridView gridMovies={movies}/>
-    </main>
+      <main className={`relative h-screen bg-gradient-to-b ${movies.length !== 0 && "lg:h-[140vh]"}`}>
+        <Header/>
+        {movies.length !== 0 ? (
+          <GridView gridMovies={movies}/>
+        ) : (
+          <div className='flex justify-center items-center h-screen'>
+            <p className='text-center'>Still Building</p>
+          </div>
+        )}
+        
+      </main>
     </RecoilRoot>
   )
 }
