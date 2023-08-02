@@ -37,7 +37,7 @@ const BasicMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}><Link href="/">Home</Link></MenuItem>
+        <MenuItem id='/' onClick={handleClose}><Link href="/">Home</Link></MenuItem>
         <MenuItem onClick={handleClose}><Link href="/tv-shows">TV Shows</Link></MenuItem>
         <MenuItem onClick={handleClose}><Link href="/movies">Movies</Link></MenuItem>
         <MenuItem onClick={handleClose}><Link href="/new-popular">New & Popular</Link></MenuItem>
