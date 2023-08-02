@@ -36,13 +36,13 @@ const page = () => {
               mysteryTv,
               comedyTv
             ] = await Promise.all([
-              fetch(requests.fetchSciFiFantTv).then((res) => res.json()),
-              fetch(requests.fetchActionTv).then((res) => res.json()),
-              fetch(requests.fetchWarPoliticsTv).then((res) => res.json()),
-              fetch(requests.fetchCrimeTv).then((res) => res.json()),
-              fetch(requests.fetchAnimatedTv).then((res) => res.json()),
-              fetch(requests.fetchMysteryTv).then((res) => res.json()),
-              fetch(requests.fetchComedyTv).then((res) => res.json()),
+              fetch(requests.fetchSciFiFantTv[0]).then((res) => res.json()),
+              fetch(requests.fetchActionTv[0]).then((res) => res.json()),
+              fetch(requests.fetchWarPoliticsTv[0]).then((res) => res.json()),
+              fetch(requests.fetchCrimeTv[0]).then((res) => res.json()),
+              fetch(requests.fetchAnimatedTv[0]).then((res) => res.json()),
+              fetch(requests.fetchMysteryTv[0]).then((res) => res.json()),
+              fetch(requests.fetchComedyTv[0]).then((res) => res.json()),
             ])
 
 

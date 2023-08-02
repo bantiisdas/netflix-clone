@@ -1,38 +1,32 @@
 'use client'
  
-import { GridView, Header } from '@/components'
-import { Movie } from '@/typing'
-import requests from '@/utils/requests'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { RecoilRoot } from 'recoil'
+import { GridView, Header } from '@/components'
+import { Movie } from '@/typing'
+import requests from '@/utils/requests'
+import { Box, LinearProgress } from '@mui/material'
+
  
 export default function Page() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  // const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
   const queryResult = pathname.replace(/\//g, "");
-  const query = "fetch"+(queryResult.charAt(0).toUpperCase() + queryResult.slice(1))
+  // const query = "fetch"+(queryResult.charAt(0).toUpperCase() + queryResult.slice(1))
   
-  // const queryGenerator = () => {
-  //   const queryResult = pathname.replace(/\//g, "");
-  //   const query = "fetch"+(queryResult.charAt(0).toUpperCase() + queryResult.slice(1))
-  //   setQuery(query);
-  // }
-
- 
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState<number>(1);
-  
   
 
   const fetchMovies = async () => {
     
     const response = await fetch(
-      requests[query]
+      requests[query]+`&page=${page}`
     );
     const data = await response.json();
     if(queryResult === "sciFiFantTv" || queryResult === "actionTv"|| queryResult === "warPoliticsTv"|| queryResult === "crimeTv"|| queryResult === "animatedTv"|| queryResult === "mysteryTv"|| queryResult === "comedyTv"){
@@ -40,6 +34,7 @@ export default function Page() {
           item.media_type = "tv";
         });
       }
+    console.log(data.results);
     
     if (page === 1) {
       setMovies(data.results);
@@ -53,8 +48,12 @@ export default function Page() {
   };
 
   useEffect(() => {
+    const query = "fetch"+(queryResult.charAt(0).toUpperCase() + queryResult.slice(1))
+    setQuery(query)
+    console.log(query);
+    
     fetchMovies();
-  }, [pathname, searchParams])
+  }, [pathname, searchParams, query, page])
 
 //  console.log(query);
 console.log(movies);
@@ -64,10 +63,16 @@ console.log(movies);
     <RecoilRoot>
       <main className={`relative h-screen bg-gradient-to-b ${movies.length !== 0 && "lg:h-[140vh]"}`}>
         <Header/>
+        
         {movies.length !== 0 ? (
-          <GridView gridMovies={movies}/>
+          <>
+            
+            <GridView gridMovies={movies} title={requests[query][1]}/>
+            <button onClick={loadMoreMovies}>Load More</button>
+          </>
         ) : (
           <div className='flex justify-center items-center h-screen'>
+            
             <p className='text-center'>Still Building</p>
           </div>
         )}

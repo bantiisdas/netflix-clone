@@ -50,14 +50,14 @@ export default function Home() {
               romanceMovies,
               documentaries,
             ] = await Promise.all([
-              fetch(requests.fetchNetflixOriginals).then((res) => res.json()),
-              fetch(requests.fetchTrendingNow).then((res) => res.json()),
-              fetch(requests.fetchTopRated).then((res) => res.json()),
-              fetch(requests.fetchActionMovies).then((res) => res.json()),
-              fetch(requests.fetchComedyMovies).then((res) => res.json()),
-              fetch(requests.fetchHorrorMovies).then((res) => res.json()),
-              fetch(requests.fetchRomanceMovies).then((res) => res.json()),
-              fetch(requests.fetchDocumentaries).then((res) => res.json()),
+              fetch(requests.fetchNetflixOriginals[0]).then((res) => res.json()),
+              fetch(requests.fetchTrendingNow[0]).then((res) => res.json()),
+              fetch(requests.fetchTopRated[0]).then((res) => res.json()),
+              fetch(requests.fetchActionMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchComedyMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchHorrorMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchRomanceMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchDocumentaries[0]).then((res) => res.json()),
             ])
             setNetflixOriginals(netflixOriginals.results);
             setTrendingNow(trendingNow.results);

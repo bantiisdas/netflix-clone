@@ -31,27 +31,25 @@ const MainContents = ({
     documentaries }: Props) => {
 
     const showModal = useRecoilValue(modalState);
-    const [hideRows, setHideRows] = useState(false);
-    const gridMovies = useRecoilValue(gridMovieState);
+    // const [hideRows, setHideRows] = useState(false);
+    // const gridMovies = useRecoilValue(gridMovieState);
     
-    const rowClick = () => {
-      setHideRows(true);
-    }
+    
 
   return (
     <>
       <div className='relative pt-7  pl-4 pb-24 lg:space-y-24 lg:pl-16'>
           <Banner netflixOriginals={netflixOriginals}/>
           <section className={`md:space-y-24`}>
-            <Row title="Tranding Now" movies={trendingNow} search="trendingNow" rowClick={rowClick}/>
-            <Row title="Top Rated" movies={topRated} search="topRated" rowClick={rowClick}/>
-            <Row title="Action Thrillers" movies={actionMovies} search="actionMovies" rowClick={rowClick}/>
+            <Row title="Tranding Now" movies={trendingNow} search="trendingNow" />
+            <Row title="Top Rated" movies={topRated} search="topRated" />
+            <Row title="Action Thrillers" movies={actionMovies} search="actionMovies" />
             {/* My List */}
             
-            <Row title="Comedies" movies={comedyMovies} search="comedyMovies" rowClick={rowClick}/>
-            <Row title="Scary Movies" movies={horrorMovies} search="horrorMovies" rowClick={rowClick}/>
-            <Row title="Romance Movies" movies={romanceMovies} search="romanceMovies" rowClick={rowClick}/>
-            <Row title="Documentaries" movies={documentaries} search="documentaries" rowClick={rowClick}/>
+            <Row title="Comedies" movies={comedyMovies} search="comedyMovies" />
+            <Row title="Scary Movies" movies={horrorMovies} search="horrorMovies" />
+            <Row title="Romance Movies" movies={romanceMovies} search="romanceMovies" />
+            <Row title="Documentaries" movies={documentaries} search="documentaries" />
           </section>
           {/* <GridView gridMovies={gridMovies}/> */}
       </div>

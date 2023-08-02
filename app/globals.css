@@ -38,7 +38,11 @@ body {
 
 @layer components {
   .headerLink {
-    @apply cursor-pointer text-sm font-light text-[#efefef] transition duration-[.4s] hover:text-[#b3b3b3];
+    @apply cursor-pointer text-sm font-light text-[#efefef] transition duration-[.4s] hover:text-[#b3b3b3] outline-slate-950 outline-2;
+  }
+  
+  .selectedHeaderLink {
+    @apply text-[#E50914] font-bold pointer-events-none;
   }
 
   .bannerButton {

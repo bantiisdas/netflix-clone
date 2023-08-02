@@ -5,11 +5,18 @@ import { BellIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useState, useEffect } from 'react';
 import BasicMenu from "./BasicMenu";
+import { Box, LinearProgress } from "@mui/material";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
 
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const { logOut } = useAuth();
+
+  const selectedPage = document.getElementById(pathname);
+  if(selectedPage)
+  selectedPage.classList.add("selectedHeaderLink")
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,11 +52,11 @@ const Header = () => {
           <BasicMenu/>
 
           <ul className='hidden space-x-4 md:flex'>
-              <li className='headerLink'><Link href="/">Home</Link></li>
-              <li className='headerLink'><Link href="/tv-shows">TV Shows</Link></li>
-              <li className='headerLink'><Link href="/movies">Movies</Link></li>
-              <li className='headerLink'><Link href="/new-popular">New & Popular</Link></li>
-              <li className='headerLink'><Link href="/mylist">My List</Link></li>
+              <li className='headerLink' id="/"><Link href="/">Home</Link></li>
+              <li className='headerLink' id="/tv-shows"><Link href="/tv-shows">TV Shows</Link></li>
+              <li className='headerLink' id="/movies"><Link href="/movies">Movies</Link></li>
+              <li className='headerLink' id="/new-popular"><Link href="/new-popular">New & Popular</Link></li>
+              <li className='headerLink' id="/mylist"><Link href="/mylist">My List</Link></li>
           </ul>
         </div>
         

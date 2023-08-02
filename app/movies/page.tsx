@@ -51,18 +51,18 @@ const page = () => {
             ] = await Promise.all([
               // fetch(requests.fetchNetflixOriginals).then((res) => res.json()),
               // fetch(requests.fetchTrending).then((res) => res.json()),
-              fetch(requests.fetchTopRated).then((res) => res.json()),
-              fetch(requests.fetchActionMovies).then((res) => res.json()),
-              fetch(requests.fetchComedyMovies).then((res) => res.json()),
-              fetch(requests.fetchHorrorMovies).then((res) => res.json()),
-              fetch(requests.fetchRomanceMovies).then((res) => res.json()),
-              fetch(requests.fetchDocumentaries).then((res) => res.json()),
+              fetch(requests.fetchTopRated[0]).then((res) => res.json()),
+              fetch(requests.fetchActionMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchComedyMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchHorrorMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchRomanceMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchDocumentaries[0]).then((res) => res.json()),
               
-              fetch(requests.fetchSciFiMovies).then((res) => res.json()),
-              fetch(requests.fetchMysteryMovies).then((res) => res.json()),
-              fetch(requests.fetchWarMovies).then((res) => res.json()),
-              fetch(requests.fetchCrimeMovies).then((res) => res.json()),
-              fetch(requests.fetchAnimatedMovies).then((res) => res.json()),
+              fetch(requests.fetchSciFiMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchMysteryMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchWarMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchCrimeMovies[0]).then((res) => res.json()),
+              fetch(requests.fetchAnimatedMovies[0]).then((res) => res.json()),
             ])
             // setNetflixOriginals(netflixOriginals.results);
             // setTrendingNow(trendingNow.results);

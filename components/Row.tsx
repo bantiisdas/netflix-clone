@@ -12,12 +12,11 @@ interface Props {
     title: String;
     movies: Movie[];
     search: string;
-    rowClick: () => void;
 }
 
-const Row = ({title, movies, search, rowClick}: Props) => {
+const Row = ({title, movies, search}: Props) => {
 
-    const [gridMovies, setGridMovies] = useRecoilState(gridMovieState);
+    // const [gridMovies, setGridMovies] = useRecoilState(gridMovieState);
     
     const router = useRouter()
 
@@ -44,8 +43,7 @@ const Row = ({title, movies, search, rowClick}: Props) => {
             </h2>
             <button className="pr-8" 
                 onClick={() => {
-                    rowClick();
-                    setGridMovies(movies)
+                    // setGridMovies(movies)
                     router.push(`${search}`)
                 }}
                 

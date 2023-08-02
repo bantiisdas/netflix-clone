@@ -30,11 +30,11 @@ export default function Home() {
               upcoming,
               trendingNow
             ] = await Promise.all([
-              fetch(requests.fetchNowPlaying).then((res) => res.json()),
-              fetch(requests.fetchPopular).then((res) => res.json()),
-              fetch(requests.fetchTopRated).then((res) => res.json()),
-              fetch(requests.fetchUpcoming).then((res) => res.json()),
-              fetch(requests.fetchTrendingNow).then((res) => res.json()),
+              fetch(requests.fetchNowPlaying[0]).then((res) => res.json()),
+              fetch(requests.fetchPopular[0]).then((res) => res.json()),
+              fetch(requests.fetchTopRated[0]).then((res) => res.json()),
+              fetch(requests.fetchUpcoming[0]).then((res) => res.json()),
+              fetch(requests.fetchTrendingNow[0]).then((res) => res.json()),
             ])
             setNowPlaying(nowPlaying.results);
             setPopular(popular.results);

@@ -11,14 +11,12 @@ import ReactPlayer from "react-player/lazy";
 import { FaPlay, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
 
 const Modal = () => {
+  
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [movie, setMovie] = useRecoilState(movieState);
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
   const [muted, setMuted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false)
-
-
   
   const handleClose = () => {
     setShowModal(false);
@@ -80,14 +78,6 @@ const Modal = () => {
       }
     }
 
-    const screenWidth = window.innerWidth;
-    // console.log(screenWidth)
-    // if(screenWidth<=475){
-    //   setIsMobile(true)
-    // }
-    // else{
-    //   setIsMobile(false)
-    // }
     fetchMovie();
   }, [movie]);
     // console.log(movie?.media_type);
@@ -148,7 +138,7 @@ const Modal = () => {
             <p className="text-2xl">{movie?.name || movie?.title}</p>
           </div>
             <div className="flex items-center space-x-2 text-sm">
-              <p className="font-semibold text-green-400">{movie?.vote_average *10}% Match</p>
+              <p className="font-semibold text-green-400">{Math.round(movie?.vote_average *10)}% Match</p>
               <p className="font-light">{movie?.release_date || movie?.first_air_date}</p>
               <div className="flex h-4 items-center justify-center rounded border border-white/40 px-1.5 text-x5">
                 HD

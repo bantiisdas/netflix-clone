@@ -26,22 +26,19 @@ const TvShows = ({
     trendingNow }: Props) => {
 
     const showModal = useRecoilValue(modalState);
-    const [hideRows, setHideRows] = useState(false);
-    const gridMovies = useRecoilValue(gridMovieState);
+    // const [hideRows, setHideRows] = useState(false);
+    // const gridMovies = useRecoilValue(gridMovieState);
     
-    const rowClick = () => {
-      setHideRows(true);
-    }
-
+    
   return (
     <>
       <div className='relative pt-7 mt-20 pl-4 pb-24 lg:space-y-24 lg:pl-16'>
           <section className={`md:space-y-24`}>
-            <Row title="Now Playing" movies={nowPlaying} search="nowPlaying" rowClick={rowClick}/>
-            <Row title="Tranding Now" movies={trendingNow} search="trendingNow" rowClick={rowClick}/>
-            <Row title="Popular" movies={popular} search="popular" rowClick={rowClick}/>
-            <Row title="Top Rated" movies={topRated} search="topRated" rowClick={rowClick}/>
-            <Row title="Upcoming" movies={upcoming} search="upcoming" rowClick={rowClick}/>
+            <Row title="Now Playing" movies={nowPlaying} search="nowPlaying" />
+            <Row title="Tranding Now" movies={trendingNow} search="trendingNow" />
+            <Row title="Popular" movies={popular} search="popular" />
+            <Row title="Top Rated" movies={topRated} search="topRated" />
+            <Row title="Upcoming" movies={upcoming} search="upcoming" />
           </section>
           {/* <GridView gridMovies={gridMovies}/> */}
       </div>
