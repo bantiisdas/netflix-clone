@@ -8,6 +8,7 @@ import { GridView, Header } from '@/components'
 import { Movie } from '@/typing'
 import requests from '@/utils/requests'
 import { Box, LinearProgress } from '@mui/material'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
  
 export default function Page() {
@@ -21,6 +22,7 @@ export default function Page() {
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [totalItems, setTotalItems] = useState(0);
   
 
   const fetchMovies = async () => {
@@ -34,7 +36,9 @@ export default function Page() {
           item.media_type = "tv";
         });
       }
-    console.log(data.results);
+    // console.log(data.results);
+    setTotalItems(data.total_results);
+    // console.log(data.total_results);
     
     if (page === 1) {
       setMovies(data.results);
@@ -50,13 +54,13 @@ export default function Page() {
   useEffect(() => {
     const query = "fetch"+(queryResult.charAt(0).toUpperCase() + queryResult.slice(1))
     setQuery(query)
-    console.log(query);
+    // console.log(query);
     
     fetchMovies();
   }, [pathname, searchParams, query, page])
 
 //  console.log(query);
-console.log(movies);
+// console.log(movies);
 
  
   return (
@@ -66,9 +70,20 @@ console.log(movies);
         
         {movies.length !== 0 ? (
           <>
-            
-            <GridView gridMovies={movies} title={requests[query][1]}/>
-            <button onClick={loadMoreMovies}>Load More</button>
+            <InfiniteScroll
+              dataLength={movies.length} //This is important field to render the next data
+              next={loadMoreMovies}
+              hasMore={totalItems>movies.length}
+              loader={<h4>Loading...</h4>}
+              endMessage={
+                <p style={{ textAlign: 'center' }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+            >
+              <GridView gridMovies={movies} title={requests[query][1]}/>
+              {/* <button onClick={loadMoreMovies}>Load More</button> */}
+            </InfiniteScroll>
           </>
         ) : (
           <div className='flex justify-center items-center h-screen'>
