@@ -17,7 +17,7 @@ const GridCard = ({ movie }: Props) => {
   return (
     <div
         key={movie.id}
-        className="relative h-0 pb-[56.25%] min-w-[180px] cursor-pointer transition duration-200 ease-out md:h-0 md:pb-[56.25%]  md:hover:scale-105"
+        className="relative h-0 pb-[56.25%]  cursor-pointer transition duration-200 ease-out md:h-0 md:pb-[56.25%]  md:hover:scale-105"
         onClick={() => {
             setCurrentMovie(movie)
             setShowModal(true)

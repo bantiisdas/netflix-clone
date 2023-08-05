@@ -60,7 +60,7 @@ export default function Page() {
   }, [pathname, searchParams, query, page])
 
 //  console.log(query);
-// console.log(movies);
+console.log(movies);
 
  
   return (

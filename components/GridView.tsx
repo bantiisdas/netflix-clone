@@ -47,11 +47,11 @@ const GridView = ({gridMovies, title}: Props) => {
 
   return (
     <>
-      <div className="relative mt-16 pt-7 pr-6 mobile:pr-20 cmd:pr-4 pl-4 pb-24 lg:px-8">
+      <div className="relative mt-16 pt-7 pr-2  cmd:pr-4 pl-4 pb-24 lg:px-8">
         <h1 className="p-5 text-3xl font-bold">
           {title}
         </h1>
-      <div className="grid grid-cols-1 cmd:grid-cols-2 clg:grid-cols-3 cxl:grid-cols-4 c2xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 mobile:grid-cols-2 clg:grid-cols-3 cxl:grid-cols-4 c2xl:grid-cols-5 gap-2 cmd:gap-4">
           {gridMovies?.map((movie: Movie) => (
             <GridCard key={movie.id} movie={movie} />
           ))}
