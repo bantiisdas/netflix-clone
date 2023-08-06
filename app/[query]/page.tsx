@@ -64,7 +64,7 @@ console.log(movies);
 
  
   return (
-    <RecoilRoot>
+    // <RecoilRoot>
       <main className={`relative h-screen bg-gradient-to-b ${movies.length !== 0 && "lg:h-[140vh]"}`}>
         <Header/>
         
@@ -93,7 +93,7 @@ console.log(movies);
         )}
         
       </main>
-    </RecoilRoot>
+    //{/* </RecoilRoot> */}
   )
 }
 
