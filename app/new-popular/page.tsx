@@ -53,7 +53,7 @@ export default function Home() {
   
   
   return (
-    //<RecoilRoot>
+    <RecoilRoot>
     <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
       <Header/>
       <NewPopular 
@@ -64,7 +64,7 @@ export default function Home() {
         trendingNow={trendingNow}
       />
     </main>
-    //</RecoilRoot>
+    </RecoilRoot>
   )
 }
 

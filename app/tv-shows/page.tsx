@@ -122,7 +122,7 @@ const page = () => {
     
     
   return (
-    //<RecoilRoot>
+    <RecoilRoot>
       <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
         <Header/>
         <TvShows 
@@ -138,7 +138,7 @@ const page = () => {
           <button className="text-black bg-white p-2 rounded" onClick={loadMoreMovies}>Load More</button>
         </div> */}
       </main>
-    //</RecoilRoot>
+    </RecoilRoot>
   )
 }
 
