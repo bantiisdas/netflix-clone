@@ -39,7 +39,7 @@ const MainContents = ({
   return (
     <>
       <div className='relative pt-7  pl-4 pb-24 lg:space-y-24 lg:pl-16'>
-          <Banner netflixOriginals={netflixOriginals}/>
+          <Banner bannerItem={netflixOriginals}/>
           <section className={`md:space-y-24`}>
             <Row title="Tranding Now" movies={trendingNow} search="trendingNow" />
             <Row title="Top Rated" movies={topRated} search="topRated" />

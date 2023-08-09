@@ -10,10 +10,10 @@ import { useRecoilState } from 'recoil';
 import { modalState, movieState } from '@/atoms/modalAtom';
 
 interface Props {
-  netflixOriginals: Movie[]
+  bannerItem: Movie[]
 }
 
-const Banner = ({ netflixOriginals }: Props) => {
+const Banner = ({ bannerItem }: Props) => {
 //   console.log("hello");
   
 // console.log(netflixOriginals);
@@ -24,9 +24,9 @@ const Banner = ({ netflixOriginals }: Props) => {
 
   useEffect(() => {
     setMovie(
-      netflixOriginals[Math.floor(Math.random() * netflixOriginals.length)]
+      bannerItem[Math.floor(Math.random() * bannerItem.length)]
     )
-  }, [netflixOriginals])
+  }, [bannerItem])
 
   // console.log(movie);
 

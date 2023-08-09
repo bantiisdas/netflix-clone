@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 interface Props {
     title: String;
     movies: Movie[];
-    search: string;
+    search?: string;
 }
 
 const Row = ({title, movies, search}: Props) => {
