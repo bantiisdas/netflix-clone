@@ -28,6 +28,8 @@ export default function page() {
       const data = await response.json();
 
       setSearchResults(data.results);
+      console.log(data);
+      
       
     } catch (error) {
       console.error();
@@ -35,9 +37,18 @@ export default function page() {
   };
 
   useEffect(() => {
-    const search = searchParams.get('search')
-    if(search)
-    setQuery(search.replace(/ /g, '%20'))
+    const movie = searchParams.get('movie')
+    const tv = searchParams.get('tv')
+    const person = searchParams.get('person')
+    if(movie){
+      setQuery(movie.replace(/ /g, '%20'))
+    }
+    else if(tv){
+      setQuery(tv.replace(/ /g, '%20'))
+    }
+    else if(person){
+      setQuery(person.replace(/ /g, '%20'))
+    }
     console.log(query);
     
     fetchData();

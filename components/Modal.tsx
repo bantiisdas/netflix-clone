@@ -2,13 +2,17 @@
 
 import { modalState, movieState } from "@/atoms/modalAtom";
 import { Genre, Movie } from "@/typing";
-import { HandThumbUpIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { CheckIcon, HandThumbUpIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import MuiModal from "@mui/material/Modal";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Element } from "@/typing";
 import ReactPlayer from "react-player/lazy";
 import { FaPlay, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+import useAuth from "@/hooks/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 const Modal = () => {
   
@@ -17,11 +21,35 @@ const Modal = () => {
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
   const [muted, setMuted] = useState(false);
-  
+  const { user } = useAuth();
+  const [addedToList, setAddedToList] = useState(false)
+
   const handleClose = () => {
     setShowModal(false);
   };
   // console.log(movie);
+
+  const handleList = async() => {
+    if(addedToList){
+      await deleteDoc(
+        doc(db, "customers", user!.uid, "myList", movie?.id.toString()!)
+      )
+
+      toast(`${movie?.title || movie?.original_name} has been removed from My List`, {
+        duration: 8000,
+      })
+    }
+    else{
+      await setDoc(
+        doc(db, "customers", user!.uid, "myList", movie?.id.toString()!), 
+        { ...movie }
+      )
+
+      toast(`${movie?.title || movie?.original_name} has been added to My List`, {
+        duration: 8000,
+      })
+    }
+  }
 
   useEffect(() => {
     if (!movie) return;
@@ -87,6 +115,7 @@ const Modal = () => {
   return (
     <MuiModal open={showModal} onClose={handleClose} className="fixed !top-0 xs:!top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide">
       <>
+        <Toaster position="bottom-center"/>
         <button
           onClick={handleClose}
           className="modalButton absolute right-5 top-5 !z-40 h-9 w-9 border-none bg-[#181818] hover:bg-[#181818]"
@@ -111,8 +140,12 @@ const Modal = () => {
                 Play
               </button>
 
-              <button className="modalButton">
-                <PlusIcon className="h-7 w-7"/>
+              <button className="modalButton" onClick={handleList}>
+                {addedToList ? (
+                  <CheckIcon className="h-7 w-7"/>) : (
+                  <PlusIcon className="h-7 w-7"/>
+                )}
+                
               </button>
 
               <button className="modalButton">

@@ -48,7 +48,7 @@ export default function Example() {
     <div className='hidden sm:flex space-x-2 items-center justify-center'>
       
       {showSearchBar && <Combobox value={selected} onChange={setSelected}>
-        <div className="relative w-52">
+        <div className="relative w-60">
           <div className="relative w-full h-8  cursor-default overflow-hidden rounded-lg bg-white bg-opacity-[0.15] text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
               autoFocus
@@ -56,6 +56,7 @@ export default function Example() {
               className="w-full outline-none border-none py-2 pl-3 pr-10 text-sm leading-5 bg-transparent text-white font-light text-shadow-md focus:ring-0"
               // displayValue={(person) => person.name}
               onChange={(event) => setQuery(event.target.value)}
+              // value={query}
             />
           </div>
           <Transition
@@ -80,7 +81,7 @@ export default function Example() {
                       }`
                     }
                     value={item}
-                    onClick={() => {router.push(`discover?search=${item.name || item.title}`)
+                    onClick={() => {router.push(`discover?${item.media_type}=${item.name || item.title}`)
                               setShowSearchBar(false)
                             }}
                   >

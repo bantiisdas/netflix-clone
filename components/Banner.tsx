@@ -31,7 +31,7 @@ const Banner = ({ bannerItem }: Props) => {
   // console.log(movie);
 
   const trimMovieDescription = (movieOverview: String) => {
-    let maxLimit = 170;
+    let maxLimit = 166;
     if (movieOverview.length <= maxLimit) {
       return movieOverview;
     }
