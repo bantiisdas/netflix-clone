@@ -18,7 +18,7 @@ export default function page() {
   const searchParams = useSearchParams()
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
-  const search = searchParams.get('search')
+  // const search = searchParams.get('search')
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -57,7 +57,7 @@ export default function page() {
 
   return (
     <RecoilRoot>
-      <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
+      <main className="relative h-screen bg-gradient-to-b">
         <Header />
           <SingleShow bannerItem={searchResults}/>
       </main>
