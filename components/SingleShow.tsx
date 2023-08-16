@@ -120,7 +120,7 @@ const fetchRelatedMovies = async () => {
               {!seeMoreDetails && <button onClick={() => setSeeMoreDetails(!seeMoreDetails)} className='text-base font-light opacity-60 underline'>see more</button>}
             </p>
             
-            <span>Rating: {movie?.vote_average}</span>
+            {movie?.vote_average && <span>Rating: {Math.round((movie?.vote_average)*10)/10}</span>}
 
             <div className='flex space-x-3'>
               <button className='bannerButton bg-white text-black'
