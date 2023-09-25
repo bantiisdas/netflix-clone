@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         domains: ['image.tmdb.org', 'rb.gy'],
-        unoptimized: true,
+        // unoptimized: true,
     },
     typescript: {
         ignoreBuildErrors: true,

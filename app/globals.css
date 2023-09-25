@@ -72,5 +72,13 @@ body {
   .menu .MuiMenuItem-root {
     @apply !block !w-72 !py-3.5 !text-center !text-sm !font-light !text-[#b3b3b3] !transition !duration-200 first:cursor-default first:!font-normal  hover:!bg-[#11100F]
   }
+
+  .movieDetailsIconsParent {
+    @apply bg-[#36454F] p-2 sm:p-3 rounded-full
+  }
+  
+  .movieDetailsIcons {
+    @apply h-5 w-5 text-white
+  }
   
 }

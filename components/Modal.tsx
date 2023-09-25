@@ -27,7 +27,6 @@ const Modal = () => {
   const handleClose = () => {
     setShowModal(false);
   };
-  // console.log(movie);
 
   const handleList = async() => {
     if(addedToList){
@@ -113,7 +112,7 @@ const Modal = () => {
     console.log(trailer);
 
   return (
-    <MuiModal open={showModal} onClose={handleClose} className="fixed !top-0 xs:!top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide">
+    <MuiModal open={showModal} onClose={handleClose} className="fixed !top-[20vh] xs:!top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide">
       <>
         <Toaster position="bottom-center"/>
         <button
@@ -132,7 +131,7 @@ const Modal = () => {
             controls
             muted={muted}
           />
-          <div className={`absolute bottom-10 flex w-full justify-end items-center xs:justify-between px-10`}>
+          <div className={`hidden absolute bottom-10  w-full justify-end items-center xs:justify-between px-10`}>
             
             <div className="hidden xs:flex space-x-2">
               <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
@@ -163,7 +162,7 @@ const Modal = () => {
           </div>
         </div>
 
-        <div className="flex space-x-16 rounded-b-md bg-[#181818] px-10 py-8">
+        <div className="hidden space-x-16 rounded-b-md bg-[#181818] px-10 py-8">
          
 
           <div className="space-y-6 text-lg">
@@ -173,7 +172,7 @@ const Modal = () => {
             <div className="flex items-center space-x-2 text-sm">
               <p className="font-semibold text-green-400">{Math.round(movie?.vote_average *10)}% Match</p>
               <p className="font-light">{movie?.release_date || movie?.first_air_date}</p>
-              <div className="flex h-4 items-center justify-center rounded border border-white/40 px-1.5 text-x5">
+              <div className="flex h-4 items-center justify-center rounded border border-white/40 px-1.5 text-xs">
                 HD
               </div>
             </div>

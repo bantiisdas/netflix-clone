@@ -10,6 +10,7 @@ export interface Genre {
     release_date?: string
     first_air_date: string
     genre_ids: number[]
+    genres?: Genre[]
     id: number
     name: string
     origin_country: string[]
@@ -20,6 +21,8 @@ export interface Genre {
     poster_path: string
     vote_average: number
     vote_count: number
+    runtime?: number
+    imdb_id?: string
   }
   
   export interface Element {
@@ -58,3 +61,32 @@ export interface Genre {
     fetchPopular: string;
     fetchUpcoming: string;
   }
+
+  export interface Credit {
+    adult?: boolean;
+    gender?: number;
+    id?: number;
+    known_for_department?: string;
+    name?: string;
+    original_name?: string;
+    popularity?: number;
+    profile_path?: string;
+    credit_id?: string;
+    department?: string;
+    job?: string[];
+  }
+
+  export interface OMDBMovie{
+    Rated: string;
+    Released: string;
+    Ratings: Rating[];
+    Metascore: string;
+    imdbRating: string;
+    imdbVotes: string;
+  }
+
+  export interface Rating{
+    Source: string;
+    Value: string;
+  }
+  

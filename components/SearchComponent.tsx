@@ -45,10 +45,10 @@ export default function Example() {
         )
 
   return (
-    <div className='hidden sm:flex space-x-2 items-center justify-center'>
-      
-      {showSearchBar && <Combobox value={selected} onChange={setSelected}>
-        <div className="relative w-60">
+    // <div className='flex space-x-2 items-center justify-center'>
+      <>
+       <Combobox value={selected} onChange={setSelected}>
+        <div className="relative w-[80vw] sm:w-60">
           <div className="relative w-full h-8  cursor-default overflow-hidden rounded-lg bg-white bg-opacity-[0.15] text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
               autoFocus
@@ -81,7 +81,7 @@ export default function Example() {
                       }`
                     }
                     value={item}
-                    onClick={() => {router.push(`discover?${item.media_type}=${item.name || item.title}`)
+                    onClick={() => {router.push(`discover?${item.media_type}=${item.id}-${item.name || item.title}`)
                               setShowSearchBar(false)
                             }}
                   >
@@ -111,9 +111,10 @@ export default function Example() {
             </Combobox.Options>
           </Transition>
         </div>
-      </Combobox>}
-      {!showSearchBar ? <MagnifyingGlassIcon className="hidden h-6 w-6 sm:inline cursor-pointer" onClick={handleClick}/>
-      : <XMarkIcon className="hidden h-6 w-6 sm:inline cursor-pointer" onClick={handleClick}/>}
-    </div>
+      </Combobox>
+      {/* {!showSearchBar ? <MagnifyingGlassIcon className="h-6 w-6 inline cursor-pointer" onClick={handleClick}/>
+      : <XMarkIcon className="h-6 w-6 inline cursor-pointer" onClick={handleClick}/>} */}
+      </>
+    //{/* </div> */}
   )
 }

@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
 import { useRecoilState } from 'recoil';
 import { modalState, movieState } from '@/atoms/modalAtom';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   bannerItem: Movie[]
@@ -21,7 +22,7 @@ const Banner = ({ bannerItem }: Props) => {
   const [movie, setMovie] = useState<Movie | null>(null);
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
-
+  const router = useRouter()
   useEffect(() => {
     setMovie(
       bannerItem[Math.floor(Math.random() * bannerItem.length)]
@@ -96,8 +97,7 @@ const Banner = ({ bannerItem }: Props) => {
           </button>
           <button className='bannerButton bg-[gray]/70'
             onClick={() => {
-              setCurrentMovie(movie)
-              setShowModal(true)
+              router.push(`discover?movie=${movie?.id}-${movie?.name || movie?.title}`)
             }}
           >
             <InformationCircleIcon className='h-5 w-5 md:h-8 md:w-8'/> More Info

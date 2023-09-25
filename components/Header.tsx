@@ -15,13 +15,16 @@ const Header = () => {
 
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
   const { logOut } = useAuth();
 
   const selectedPage = document.getElementById(pathname);
   if(selectedPage)
   selectedPage.classList.add("selectedHeaderLink")
 
-
+  const handleClick = () => {
+    setShowSearchBar(!showSearchBar);
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +46,7 @@ const Header = () => {
 
   return (
     <header className={`${isScrolled && "bg-[#141414]"}`}>
-        <div className="flex items-center space-x-2 md:space-x-10">
+        <div className={`${showSearchBar && "hidden sm:flex"} flex items-center space-x-2 md:space-x-10`}>
           <Link href="/">
             <img
               src="https://rb.gy/ulxxee"
@@ -66,14 +69,16 @@ const Header = () => {
         </div>
         
         <div className="flex items-center space-x-4 text-sm font-light">
-          {/* {showSearchBar && <SearchComponent/>}
-          {!showSearchBar ? <MagnifyingGlassIcon className="hidden h-6 w-6 sm:inline cursor-pointer" onClick={handleClick}/>
-          :<XMarkIcon className="h-6 w-6 cursor-pointer" onClick={handleClick}/>} */}
+          <div className={`flex ${showSearchBar && "w-[90vw] sm:w-auto"} space-x-2 items-center justify-center`}>
+            {showSearchBar && <SearchComponent/>}
+            {!showSearchBar ? <MagnifyingGlassIcon className="h-6 w-6 sm:inline cursor-pointer" onClick={handleClick}/>
+            : <XMarkIcon className="h-6 w-6 sm:inline cursor-pointer" onClick={handleClick}/>} 
+          </div>
 
-          <SearchComponent/>
+          {/* <SearchComponent/> */}
           
           <p className="hidden lg:inline">Kids</p>
-          <BellIcon className="h-6 w-6"/>
+          <BellIcon className={`${showSearchBar && "hidden sm:flex"} h-6 w-6`}/>
           {/* <Link
             href="/account"
           > */}
@@ -81,7 +86,7 @@ const Header = () => {
             onClick={logOut}
               src="https://rb.gy/g1pwyx" 
               alt=""
-              className="cursor-pointer rounded"
+              className={`${showSearchBar && "hidden sm:flex"} cursor-pointer rounded`}
             />
           {/* </Link> */}
         </div>
