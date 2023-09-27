@@ -16,7 +16,7 @@ import { ListBulletIcon, StarIcon, HeartIcon, BookmarkIcon, PlayIcon } from "@he
 import MovieDetails from "@/components/MovieDetails";
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-const OMDB_API_KEY = process.env.NEXT_PUBLIC_OMDB_API_KEY;
+
 
 export default function page() {
   // const pathname = usePathname()
@@ -25,8 +25,8 @@ export default function page() {
   // const [searchResults, setSearchResults] = useState<Movie>();
   const [show, setShow] = useState<Movie | null>(null);
   const [credits, setCredits] = useState<Credit[]>([])
-  const [imdbId, setImdbId] = useState("")
-  const [omdbData, setOmdbData] = useState<any>()
+  const [imdbId, setImdbId] = useState<string>("")
+  
   // const search = searchParams.get('search')
   const query = (searchParams.get("movie"))?.split('-')[0] || (searchParams.get("tv"))?.split('-')[0] || (searchParams.get("person"))?.split('-')[0];
   const fetchData = async () => {
@@ -100,16 +100,7 @@ export default function page() {
     
   }
 
-  const fetchContentRating = async (imdbId: string) => {
-    const response = await fetch(
-      `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`
-    );
-    const data = await response.json();
-      
-    console.log(data);
-
-    setOmdbData(data);
-  }
+  
 
   useEffect(() => {
     // const movie = searchParams.get('movie')
@@ -125,46 +116,18 @@ export default function page() {
     //   setQuery((person.replace(/ /g, '%20')).split('-')[0])
     // }
     console.log("hi"+query+"hi");
-    if(query)
-    fetchData();
+      if(query){
+      fetchData();
 
-    fetchCredits()
-      
-    if(imdbId){
-      console.log("hi");
-      
-      fetchContentRating(imdbId);
+      fetchCredits();
     }
 
-  }, [query, imdbId]);
-
-  useEffect(() => {
+    console.log("ImdbId="+imdbId);
     
-  }, [omdbData])
-  
 
-  const formatDate = (inputDate?: string) => {
-    if(!inputDate) return;
+  }, [query]);
 
-    const parts = inputDate.split("-");
-    
-    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-    
-    return formattedDate;
-  }
-  
-  const formatDuration = (time: number) => {
-    if(!time) return
-    let formatedTime = '';
-    if(time && time > 60){
-      let hour = Math.floor(time / 60);
-      let minute = Math.round(time % 60);
-      formatedTime = `${hour}h ${minute}m`;
-      return formatedTime;
-    }
-  }
-
-
+ 
   return (
     <RecoilRoot>
       <main className="relative ">
@@ -291,7 +254,7 @@ export default function page() {
             </div> */}
             </>
 
-            <MovieDetails show={show} credits={credits} contentRating={omdbData?.Rated}/>
+            <MovieDetails show={show} credits={credits} imdbId={imdbId}/>
 
           </div>
       

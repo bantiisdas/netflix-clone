@@ -1,3 +1,5 @@
+"use client"
+import { useEffect, useState } from "react";
 import { formatDate, formatDuration } from '@/constants/functions'
 import { Credit, Movie } from '@/typing'
 import CircularRating from './CircularRating';
@@ -10,20 +12,41 @@ import Modal from './Modal';
 interface Props {
   show: Movie | null;
   credits: Credit[];
-  contentRating: string;
+  imdbId: string;
 }
 
-const MovieDetails = ({ show, credits, contentRating }: Props) => {
+const OMDB_API_KEY = process.env.NEXT_PUBLIC_OMDB_API_KEY;
 
+const MovieDetails = ({ show, credits, imdbId }: Props) => {
+  const [omdbData, setOmdbData] = useState<any>()
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
 
   const playBtnClick = () => {
     setCurrentMovie(show)
     setShowModal(true)
-    console.log("Clicked");
-    
   }
+  
+  
+
+  const fetchContentRating = async (imdbId: string) => {
+    const response = await fetch(
+      `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`
+    );
+    console.log(`https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`);
+    
+    const data = await response.json();
+      
+    console.log(data);
+
+    setOmdbData(data);
+  }
+
+  useEffect(() => {
+    if(imdbId){
+      fetchContentRating(imdbId);
+    }
+  }, [imdbId])
   
   return (
     <>
@@ -32,7 +55,7 @@ const MovieDetails = ({ show, credits, contentRating }: Props) => {
           <h1 className="flex flex-row mt-3 items-center justify-center sm:justify-start text-xl sm:text-4xl font-bold mb-1">{show?.title || show?.original_name}&nbsp;<p className="text-gray-200 font-normal">({(show?.release_date)?.split('-')[0]})</p></h1>
           <div className="hidden sm:flex items-center gap-2">
             <span className="flex items-center justify-center rounded border border-gray-400 p-[1px] text-xs text-gray-400">
-              {contentRating}
+              {omdbData?.Rated}
             </span>
             <span>{formatDate(show?.release_date)}&nbsp;&#x2022;</span>
             <span>{show?.genres?.map((genre) => (
@@ -86,7 +109,7 @@ const MovieDetails = ({ show, credits, contentRating }: Props) => {
         <div className="bg-[#333333] flex -mx-4 sm:hidden flex-col py-3 w-screen items-center justify-center gap-1 text-sm font-normal">
           <div className="flex flex-row">
             <span className="flex items-center justify-center rounded border border-gray-400 p-[1px] text-xs text-gray-400">
-              {contentRating}
+              {omdbData?.Rated}
             </span>&nbsp;
             <span>{formatDate(show?.release_date)}&nbsp;&#x2022;</span>&nbsp;
             <span>{show?.runtime && formatDuration(show?.runtime)}</span>
