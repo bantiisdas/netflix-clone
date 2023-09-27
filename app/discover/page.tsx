@@ -102,7 +102,7 @@ export default function page() {
 
   const fetchContentRating = async (imdbId: string) => {
     const response = await fetch(
-      `http://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`
+      `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`
     );
     const data = await response.json();
       
