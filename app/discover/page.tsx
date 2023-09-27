@@ -136,7 +136,7 @@ export default function page() {
       fetchContentRating(imdbId);
     }
 
-  }, [query, imdbId]);
+  }, [query, imdbId, setOmdbData]);
 
   const formatDate = (inputDate?: string) => {
     if(!inputDate) return;
