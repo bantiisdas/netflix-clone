@@ -45,11 +45,6 @@ const TvShows = ({
             movies={sciFiFantTv}
             search="sciFiFantTv"
           />
-          <Row
-            title="Sci-Fi Fantasy"
-            movies={sciFiFantTv}
-            search="sciFiFantTv"
-          />
           <Row title="Action" movies={actionTv} search="actionTv" />
           <Row
             title="War & Politics"
