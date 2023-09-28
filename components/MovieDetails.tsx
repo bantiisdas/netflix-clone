@@ -91,7 +91,7 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
         <div className="w-full">
           <h1 className="inline-block mt-3 items-center justify-center sm:justify-start text-xl sm:text-4xl font-bold mb-1">
             {show?.name || show?.title || show?.original_name}&nbsp;
-            <p className="inline-block text-gray-200 font-normal">
+            <p className="inline-block text-gray-200 text-base sm:text-2xl font-normal">
               {showYear()}
             </p>
           </h1>
