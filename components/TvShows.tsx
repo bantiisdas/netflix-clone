@@ -11,45 +11,60 @@ import { useState } from "react";
 // }
 
 interface Props {
-    sciFiFantTv: Movie[];
-    actionTv: Movie[];
-    warPoliticsTv: Movie[];
-    crimeTv: Movie[];
-    animatedTv: Movie[];
-    mysteryTv: Movie[];
-    comedyTv: Movie[];
+  trendingTv: Movie[];
+  sciFiFantTv: Movie[];
+  actionTv: Movie[];
+  warPoliticsTv: Movie[];
+  crimeTv: Movie[];
+  animatedTv: Movie[];
+  mysteryTv: Movie[];
+  comedyTv: Movie[];
 }
 
-const TvShows = ({ 
-    sciFiFantTv,
-    actionTv,
-    warPoliticsTv,
-    crimeTv,
-    animatedTv,
-    mysteryTv,
-    comedyTv }: Props) => {
-
-    const showModal = useRecoilValue(modalState);
-    // const [hideRows, setHideRows] = useState(false);
-    // const gridMovies = useRecoilValue(gridMovieState);
-    
+const TvShows = ({
+  trendingTv,
+  sciFiFantTv,
+  actionTv,
+  warPoliticsTv,
+  crimeTv,
+  animatedTv,
+  mysteryTv,
+  comedyTv,
+}: Props) => {
+  const showModal = useRecoilValue(modalState);
+  // const [hideRows, setHideRows] = useState(false);
+  // const gridMovies = useRecoilValue(gridMovieState);
 
   return (
     <>
-      <div className='relative pt-7 mt-20 pl-4 pb-24 lg:space-y-24 lg:pl-16'>
-          <section className={`md:space-y-24`}>
-            <Row title="Sci-Fi Fantasy" movies={sciFiFantTv} search="sciFiFantTv" />
-            <Row title="Action" movies={actionTv} search="actionTv" />
-            <Row title="War & Politics" movies={warPoliticsTv} search="warPoliticsTv" />
-            <Row title="Crime" movies={crimeTv} search="crimeTv" />
-            <Row title="Animated" movies={animatedTv} search="animatedTv" />
-            <Row title="Mystery" movies={mysteryTv} search="mysteryTv" />
-            <Row title="Comedy" movies={comedyTv} search="comedyTv" />
-          </section>
-          {/* <GridView gridMovies={gridMovies}/> */}
+      <div className="relative pt-7 mt-20 pl-4 pb-24 lg:space-y-24 lg:pl-16">
+        <section className={`md:space-y-24`}>
+          <Row title="Trending Now" movies={trendingTv} search="trendingTv" />
+          <Row
+            title="Sci-Fi Fantasy"
+            movies={sciFiFantTv}
+            search="sciFiFantTv"
+          />
+          <Row
+            title="Sci-Fi Fantasy"
+            movies={sciFiFantTv}
+            search="sciFiFantTv"
+          />
+          <Row title="Action" movies={actionTv} search="actionTv" />
+          <Row
+            title="War & Politics"
+            movies={warPoliticsTv}
+            search="warPoliticsTv"
+          />
+          <Row title="Crime" movies={crimeTv} search="crimeTv" />
+          <Row title="Animated" movies={animatedTv} search="animatedTv" />
+          <Row title="Mystery" movies={mysteryTv} search="mysteryTv" />
+          <Row title="Comedy" movies={comedyTv} search="comedyTv" />
+        </section>
+        {/* <GridView gridMovies={gridMovies}/> */}
       </div>
-      
-      {showModal && <Modal/>}
+
+      {showModal && <Modal />}
     </>
   );
 };
