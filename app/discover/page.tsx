@@ -20,8 +20,12 @@ import {
   PlayIcon,
 } from "@heroicons/react/20/solid";
 import MovieDetails from "@/components/MovieDetails";
+import { Color } from "color-thief-react";
 
+import { resolve } from "path";
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+
+const Loading = () => <div>Loading...</div>;
 
 export default function page() {
   // const pathname = usePathname()
@@ -33,6 +37,9 @@ export default function page() {
   const [credits, setCredits] = useState<Credit[]>([]);
   const [imdbId, setImdbId] = useState<string>("");
   // const search = searchParams.get('search')
+
+  // const ColorThief = require("colorthief");
+
   const query =
     searchParams.get("movie")?.split("-")[0] ||
     searchParams.get("tv")?.split("-")[0] ||
@@ -57,6 +64,22 @@ export default function page() {
 
       // setSearchResults(data.results);
       console.log(data);
+
+      // if (data?.poster_path) {
+      //   const img = resolve(
+      //     process.cwd(),
+      //     `https://image.tmdb.org/t/p/original/ehGIDAMaYy6Eg0o8ga0oqflDjqW.jpg`
+      //   );
+
+      //   ColorThief.getColor(img)
+      //     .then((color) => {
+      //       console.log(color);
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //     });
+      // }
+
       setImdbId(data?.imdb_id);
       if (!data.media_type) {
         data.media_type = contentType;
@@ -133,18 +156,6 @@ export default function page() {
   };
 
   useEffect(() => {
-    // const movie = searchParams.get('movie')
-    // const tv = searchParams.get('tv')
-    // const person = searchParams.get('person')
-    // if(movie){
-    //   setQuery(movie.split('-')[0])
-    // }
-    // else if(tv){
-    //   setQuery((tv.replace(/ /g, '%20')).split('-')[0])
-    // }
-    // else if(person){
-    //   setQuery((person.replace(/ /g, '%20')).split('-')[0])
-    // }
     console.log("hi" + query + "hi");
     if (query) {
       fetchData();
