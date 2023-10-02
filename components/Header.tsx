@@ -1,6 +1,6 @@
 "use client";
 
-import useAuth from "@/hooks/useAuth";
+// import useAuth from "@/hooks/useAuth";
 import {
   BellIcon,
   MagnifyingGlassIcon,
@@ -18,10 +18,8 @@ const Header = () => {
   const searchParams = useSearchParams();
   const [isScrolled, setIsScrolled] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
-  const { logOut } = useAuth();
+  // const { logOut } = useAuth();
 
-  const selectedPage = document.getElementById(pathname);
-  if (selectedPage) selectedPage.classList.add("selectedHeaderLink");
   // console.log(searchParams);
 
   const handleClick = () => {
@@ -29,6 +27,9 @@ const Header = () => {
   };
 
   useEffect(() => {
+    const selectedPage = document.getElementById(pathname);
+    if (selectedPage) selectedPage.classList.add("selectedHeaderLink");
+
     const handleScroll = () => {
       if (window.scrollY > 0) {
         setIsScrolled(true);
@@ -112,7 +113,7 @@ const Header = () => {
             href="/account"
           > */}
         <img
-          onClick={logOut}
+          // onClick={logOut}
           src="https://rb.gy/g1pwyx"
           alt=""
           className={`${
