@@ -29,6 +29,7 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
   const [omdbData, setOmdbData] = useState<any>();
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const searchParams = useSearchParams();
 
   const playBtnClick = () => {
@@ -80,10 +81,20 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
     setOmdbData(data);
   };
 
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
   useEffect(() => {
     console.log(contentType);
 
     fetchContentRating();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener("resize", handleResize);
+    };
   }, [imdbId, contentType, show]);
 
   const { data, loading, error } = useColor(
@@ -91,139 +102,156 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
     "hex",
     { quality: 40, crossOrigin: "anonymous" }
   );
-  console.log("Color=" + data);
+  console.log("Color=" + data + "-" + typeof data);
 
   return (
     <>
       <div
-        style={{ backgroundColor: data }}
-        className={`bg-opacity-0 w-screen sm:w-2/3 text-white p-4 flex flex-col items-start justify-start gap-3`}
+        style={{
+          backgroundColor: `${screenWidth > 640 ? data + "66" : "transparent"}`,
+        }}
+        className="relative w-screen sm:w-full h-full flex flex-col sm:flex-row justify-start sm:justify-between items-center "
       >
-        <div className="w-full">
-          <h1 className="inline-block mt-3 items-center justify-center sm:justify-start text-xl sm:text-4xl font-bold mb-1">
-            {show?.name || show?.title || show?.original_name}&nbsp;
-            <p className="inline-block text-gray-200 text-base sm:text-2xl font-normal">
-              {showYear()}
-            </p>
-          </h1>
-          <div className="hidden sm:flex items-center gap-2">
-            <span className="flex items-center justify-center rounded border border-gray-400 p-[1px] text-xs text-gray-400">
-              {omdbData?.Rated}
-            </span>
-            <span>
-              {formatDate(
-                contentType === "movie"
-                  ? show?.release_date
-                  : show?.first_air_date
-              )}
-              &nbsp;&#x2022;
-            </span>
-            <span>{show?.genres?.map((genre) => genre.name).join(", ")}</span>
-            {show?.runtime && (
-              <span>&#x2022;&nbsp;{formatDuration(show?.runtime)}</span>
-            )}
-          </div>
+        {/* Movie Poster (on the left) */}
+        <div className="w-full sm:w-1/3 h-[30vh] sm:h-full py-5 sm:py-10 pl-5 sm:pl-0 flex items-center justify-start sm:justify-center">
+          <img
+            src={`https://image.tmdb.org/t/p/original${show?.poster_path}`} // Provide the URL for the movie poster
+            alt="Movie" // Set the alt text for accessibility
+            className="max-h-full max-w-full object-contain rounded-lg"
+          />
         </div>
+        <div
+          style={{
+            backgroundColor: `${screenWidth <= 640 ? data : "transparent"}`,
+          }}
+          className={`bg-opacity-0 w-screen sm:w-2/3 text-white p-4 flex flex-col items-start justify-start gap-3`}
+        >
+          <div className="w-full">
+            <h1 className="inline-block mt-3 items-center justify-center sm:justify-start text-xl sm:text-4xl font-bold mb-1">
+              {show?.name || show?.title || show?.original_name}&nbsp;
+              <p className="inline-block text-gray-200 text-base sm:text-2xl font-normal">
+                {showYear()}
+              </p>
+            </h1>
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="flex items-center justify-center rounded border border-gray-400 p-[1px] text-xs text-gray-400">
+                {omdbData?.Rated}
+              </span>
+              <span>
+                {formatDate(
+                  contentType === "movie"
+                    ? show?.release_date
+                    : show?.first_air_date
+                )}
+                &nbsp;&#x2022;
+              </span>
+              <span>{show?.genres?.map((genre) => genre.name).join(", ")}</span>
+              {show?.runtime && (
+                <span>&#x2022;&nbsp;{formatDuration(show?.runtime)}</span>
+              )}
+            </div>
+          </div>
 
-        <div className="w-full mt-1 sm:mt-4 mb-4 flex flex-col sm:flex-row items-center gap-5 sm:gap-6">
-          <div className="w-full sm:w-auto flex flex-row items-center justify-between px-4 sm:px-0">
-            <div className="flex flex-row gap-0 sm:gap-2 items-center">
-              <CircularRating
-                percent={
-                  omdbData?.imdbRating !== "N/A"
-                    ? omdbData?.imdbRating
-                    : show?.vote_average
-                }
-              />
-              <div className="flex flex-row sm:flex-col font-semibold gap-1 sm:gap-0">
-                <span>IMDb</span>
-                <span>Rating</span>
+          <div className="w-full mt-1 sm:mt-4 mb-4 flex flex-col sm:flex-row items-center gap-5 sm:gap-6">
+            <div className="w-full sm:w-auto flex flex-row items-center justify-between px-4 sm:px-0">
+              <div className="flex flex-row gap-0 sm:gap-2 items-center">
+                <CircularRating
+                  percent={
+                    omdbData?.imdbRating !== "N/A"
+                      ? omdbData?.imdbRating
+                      : show?.vote_average
+                  }
+                />
+                <div className="flex flex-row sm:flex-col font-semibold gap-1 sm:gap-0">
+                  <span>IMDb</span>
+                  <span>Rating</span>
+                </div>
+              </div>
+
+              <div className="flex sm:hidden h-7 bg-gray-500 w-[1px]" />
+
+              <div
+                className="flex sm:hidden flex-row gap-2 cursor-pointer"
+                onClick={playBtnClick}
+              >
+                <PlayIcon className="h-6 w-6 text-white" />
+                Play Trailer
               </div>
             </div>
 
-            <div className="flex sm:hidden h-7 bg-gray-500 w-[1px]" />
+            <div className="w-full sm:w-auto flex flex-row items-center justify-between sm:justify-center sm:gap-6 px-12 sm:px-0">
+              <div className="movieDetailsIconsParent">
+                <ListBulletIcon className="movieDetailsIcons" />
+              </div>
 
-            <div
-              className="flex sm:hidden flex-row gap-2 cursor-pointer"
-              onClick={playBtnClick}
-            >
-              <PlayIcon className="h-6 w-6 text-white" />
-              Play Trailer
+              <div className="movieDetailsIconsParent">
+                <HeartIcon className="movieDetailsIcons" />
+              </div>
+
+              <div className="movieDetailsIconsParent">
+                <BookmarkIcon className="movieDetailsIcons" />
+              </div>
+
+              <div className="movieDetailsIconsParent">
+                <StarIcon className="movieDetailsIcons" />
+              </div>
+
+              <div
+                className="hidden sm:flex flex-row gap-2 cursor-pointer"
+                onClick={playBtnClick}
+              >
+                <PlayIcon className="h-6 w-6 text-white" />
+                Play Trailer
+              </div>
             </div>
           </div>
 
-          <div className="w-full sm:w-auto flex flex-row items-center justify-between sm:justify-center sm:gap-6 px-12 sm:px-0">
-            <div className="movieDetailsIconsParent">
-              <ListBulletIcon className="movieDetailsIcons" />
-            </div>
-
-            <div className="movieDetailsIconsParent">
-              <HeartIcon className="movieDetailsIcons" />
-            </div>
-
-            <div className="movieDetailsIconsParent">
-              <BookmarkIcon className="movieDetailsIcons" />
-            </div>
-
-            <div className="movieDetailsIconsParent">
-              <StarIcon className="movieDetailsIcons" />
-            </div>
-
-            <div
-              className="hidden sm:flex flex-row gap-2 cursor-pointer"
-              onClick={playBtnClick}
-            >
-              <PlayIcon className="h-6 w-6 text-white" />
-              Play Trailer
-            </div>
-          </div>
-        </div>
-
-        {/* Info div */}
-        <div className="bg-[#333333] bg-opacity-10  flex -mx-4 sm:hidden flex-col py-3 w-screen items-center justify-center gap-1 text-sm font-normal">
-          <div className="flex flex-row">
-            <span className="flex items-center justify-center rounded border border-gray-400 p-[1px] text-xs text-gray-300">
-              {omdbData?.Rated}
-            </span>
-            &nbsp;
-            <span>
-              {formatDate(
-                contentType === "movie"
-                  ? show?.release_date
-                  : show?.first_air_date
+          {/* Info div */}
+          <div className="bg-[#333333] bg-opacity-10  flex -mx-4 sm:hidden flex-col py-3 w-screen items-center justify-center gap-1 text-sm font-normal">
+            <div className="flex flex-row">
+              <span className="flex items-center justify-center rounded border border-gray-400 p-[1px] text-xs text-gray-300">
+                {omdbData?.Rated}
+              </span>
+              &nbsp;
+              <span>
+                {formatDate(
+                  contentType === "movie"
+                    ? show?.release_date
+                    : show?.first_air_date
+                )}
+              </span>
+              &nbsp;
+              {show?.runtime && (
+                <span>&#x2022;&nbsp;{formatDuration(show?.runtime)}</span>
               )}
-            </span>
-            &nbsp;
-            {show?.runtime && (
-              <span>&#x2022;&nbsp;{formatDuration(show?.runtime)}</span>
-            )}
+            </div>
+            <span>{show?.genres?.map((genre) => genre.name).join(", ")}</span>
           </div>
-          <span>{show?.genres?.map((genre) => genre.name).join(", ")}</span>
-        </div>
 
-        <div className="px-2 sm:px-0 mt-3 sm:mt-0">
-          <h2 className="text-lg sm:text-xl font-bold pb-1 sm:pb-2">
-            Overview
-          </h2>
-          <p className="text-sm mb-4">{show?.overview}</p>
-        </div>
+          <div className="px-2 sm:px-0 mt-3 sm:mt-0">
+            <h2 className="text-lg sm:text-xl font-bold pb-1 sm:pb-2">
+              Overview
+            </h2>
+            <p className="text-sm mb-4">{show?.overview}</p>
+          </div>
 
-        <div className="flex flex-row flex-wrap px-2 sm:px-0 w-full">
-          {contentType === "movie"
-            ? credits.map((person) => (
-                <div className="w-1/2 pr-2 py-2">
-                  <h4 className="font-medium text-sm">{person.name}</h4>
-                  <p className="font-light text-sm">
-                    {person?.job?.map((job) => job).join(", ")}
-                  </p>
-                </div>
-              ))
-            : omdbData?.Writer?.split(", ").map((person: any) => (
-                <div className="w-1/2 pr-2 py-2">
-                  <h4 className="font-medium text-sm">{person}</h4>
-                  <p className="font-light text-sm">Creator</p>
-                </div>
-              ))}
+          <div className="flex flex-row flex-wrap px-2 sm:px-0 w-full">
+            {contentType === "movie"
+              ? credits.map((person) => (
+                  <div className="w-1/2 pr-2 py-2">
+                    <h4 className="font-medium text-sm">{person.name}</h4>
+                    <p className="font-light text-sm">
+                      {person?.job?.map((job) => job).join(", ")}
+                    </p>
+                  </div>
+                ))
+              : omdbData?.Writer?.split(", ").map((person: any) => (
+                  <div className="w-1/2 pr-2 py-2">
+                    <h4 className="font-medium text-sm">{person}</h4>
+                    <p className="font-light text-sm">Creator</p>
+                  </div>
+                ))}
+          </div>
         </div>
       </div>
       {showModal && <Modal />}

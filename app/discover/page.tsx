@@ -174,31 +174,22 @@ export default function page() {
 
         <div className="relative w-screen sm:h-[88vh] mt-[72px]">
           <div className="absolute h-[30vh] sm:h-full -z-10 w-full opacity-95 sm:opacity-20 ">
-            <img
+            <Image
               src={`https://image.tmdb.org/t/p/original${show?.backdrop_path}`} // Provide the URL for the backdrop image
               alt="Elemental" // Set the alt text for accessibility
+              fill
               className="w-full h-full object-cover"
             />
           </div>
 
           {/* Movie Details */}
-          <div className="relative w-screen sm:w-full h-full flex flex-col sm:flex-row justify-start sm:justify-between items-center ">
-            {/* Movie Poster (on the left) */}
-            <div className="w-full sm:w-1/3 h-[30vh] sm:h-full py-5 sm:py-10 pl-5 sm:pl-0 flex items-center justify-start sm:justify-center">
-              <img
-                src={`https://image.tmdb.org/t/p/original${show?.poster_path}`} // Provide the URL for the movie poster
-                alt="Movie" // Set the alt text for accessibility
-                className="max-h-full max-w-full object-contain rounded-lg"
-              />
-            </div>
 
-            <MovieDetails
-              show={show}
-              credits={credits}
-              imdbId={imdbId}
-              contentType={contentType}
-            />
-          </div>
+          <MovieDetails
+            show={show}
+            credits={credits}
+            imdbId={imdbId}
+            contentType={contentType}
+          />
         </div>
       </main>
     </RecoilRoot>
