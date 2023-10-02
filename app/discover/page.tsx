@@ -129,20 +129,8 @@ export default function page() {
       const response = await fetch(
         `https://api.themoviedb.org/3/${contentType}/${query}/recommendations?language=en-US&api_key=${API_KEY}`
       );
-      const data = await response.json();
 
-      if (data.results.length === 0) {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/${contentType}/${query}/similar?language=en-US&api_key=${API_KEY}`
-        );
-        const data = await response.json();
-        if (!data.media_type) {
-          data.media_type = contentType;
-        }
-        console.log(data);
-        setRecommendations(data.results);
-        return;
-      }
+      const data = await response.json();
 
       console.log(data);
 
@@ -188,7 +176,7 @@ export default function page() {
             contentType={contentType}
           />
         </div>
-        <div className="relative pt-7 mt-8 pl-4 pb-8 lg:pb-24 lg:pl-16">
+        <div className="relative pt-7 mt-8 pl-4 pb-24 lg:pl-16">
           <Row
             title="People Also Like"
             movies={recommendations}
