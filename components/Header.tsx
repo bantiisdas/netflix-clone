@@ -22,7 +22,7 @@ const Header = () => {
 
   const selectedPage = document.getElementById(pathname);
   if (selectedPage) selectedPage.classList.add("selectedHeaderLink");
-  console.log(searchParams);
+  // console.log(searchParams);
 
   const handleClick = () => {
     setShowSearchBar(!showSearchBar);

@@ -66,17 +66,10 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
           : imdbId
       }&apikey=${OMDB_API_KEY}`
     );
-    console.log(
-      `https://www.omdbapi.com/?${contentType === "tv" ? "t" : "i"}=${
-        contentType === "tv"
-          ? show?.name || show?.title || show?.original_name
-          : imdbId
-      }&apikey=${OMDB_API_KEY}`
-    );
 
     const data = await response.json();
 
-    console.log(data);
+    // console.log(data);
 
     setOmdbData(data);
   };
@@ -86,7 +79,7 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
   };
 
   useEffect(() => {
-    console.log(contentType);
+    // console.log(contentType);
 
     fetchContentRating();
 
@@ -102,7 +95,7 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
     "hex",
     { quality: 40, crossOrigin: "anonymous" }
   );
-  console.log("Color=" + data + "-" + typeof data);
+  // console.log("Color=" + data + "-" + typeof data);
 
   return (
     <>
@@ -134,9 +127,11 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
               </p>
             </h1>
             <div className="hidden sm:flex items-center gap-2">
-              <span className="flex items-center justify-center rounded border border-gray-400 p-[1px] text-xs text-gray-400">
-                {omdbData?.Rated}
-              </span>
+              {omdbData?.Rated !== "NA" && omdbData?.Rated !== "Not Rated" && (
+                <span className="flex items-center justify-center rounded border border-gray-400 p-[1px] text-xs text-gray-400">
+                  {omdbData?.Rated}
+                </span>
+              )}
               <span>
                 {formatDate(
                   contentType === "movie"

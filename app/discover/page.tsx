@@ -3,11 +3,7 @@
 // import { modalState } from "@/atoms/modalAtom";
 import { Banner, Header, MainContents, Row } from "@/components";
 import CircularRating from "@/components/CircularRating";
-// import SingleShow from "@/components/SingleShow";
-// import useAuth from "@/hooks/useAuth";
 import { Credit, Movie } from "@/typing";
-// import { fetchMovies } from '@/utils/requests';
-// import requests from "@/utils/requests";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,25 +16,17 @@ import {
   PlayIcon,
 } from "@heroicons/react/20/solid";
 import MovieDetails from "@/components/MovieDetails";
-import { Color } from "color-thief-react";
 
-import { resolve } from "path";
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-
-const Loading = () => <div>Loading...</div>;
 
 export default function page() {
   // const pathname = usePathname()
   const searchParams = useSearchParams();
-  // const [query, setQuery] = useState("");
-  // const [searchResults, setSearchResults] = useState<Movie>();
   const [show, setShow] = useState<Movie | null>(null);
 
   const [credits, setCredits] = useState<Credit[]>([]);
   const [imdbId, setImdbId] = useState<string>("");
-  // const search = searchParams.get('search')
-
-  // const ColorThief = require("colorthief");
+  const [recommendations, setRecommendations] = useState<Movie[]>([]);
 
   const query =
     searchParams.get("movie")?.split("-")[0] ||
@@ -56,29 +44,10 @@ export default function page() {
       const response = await fetch(
         `https://api.themoviedb.org/3/${contentType}/${query}?language=en-US&api_key=${API_KEY}`
       );
-      console.log(
-        `https://api.themoviedb.org/3/movie/${query}?language=en-US&api_key=${API_KEY}`
-      );
 
       const data = await response.json();
 
-      // setSearchResults(data.results);
-      console.log(data);
-
-      // if (data?.poster_path) {
-      //   const img = resolve(
-      //     process.cwd(),
-      //     `https://image.tmdb.org/t/p/original/ehGIDAMaYy6Eg0o8ga0oqflDjqW.jpg`
-      //   );
-
-      //   ColorThief.getColor(img)
-      //     .then((color) => {
-      //       console.log(color);
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-      // }
+      // console.log(data);
 
       setImdbId(data?.imdb_id);
       if (!data.media_type) {
@@ -96,7 +65,7 @@ export default function page() {
         `https://api.themoviedb.org/3/${contentType}/${query}/credits?language=en-US&api_key=${API_KEY}`
       );
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       const jobTitlesToFilter = [
         "Screenplay",
@@ -120,7 +89,7 @@ export default function page() {
           return mergedData;
         }, []);
 
-      console.log(mergedArray);
+      // console.log(mergedArray);
       setCredits(mergedArray);
     }
     // else if (contentType === "tv") {
@@ -155,15 +124,31 @@ export default function page() {
     // setCredits(mergedCast);
   };
 
+  const fetchRecommendations = async () => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/${contentType}/${query}/recommendations?language=en-US&api_key=${API_KEY}`
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+
+      setRecommendations(data.results);
+    } catch (error) {
+      console.error();
+    }
+  };
+
   useEffect(() => {
-    console.log("hi" + query + "hi");
+    // console.log("hi" + query + "hi");
     if (query) {
       fetchData();
-
       fetchCredits();
+      fetchRecommendations();
     }
 
-    console.log("ImdbId=" + imdbId);
+    // console.log("ImdbId=" + imdbId);
   }, [query, contentType]);
 
   return (
@@ -189,6 +174,13 @@ export default function page() {
             credits={credits}
             imdbId={imdbId}
             contentType={contentType}
+          />
+        </div>
+        <div className="relative pt-7 mt-8 pl-4 pb-24 lg:pl-16">
+          <Row
+            title="People Also Like"
+            movies={recommendations}
+            seeMoreBtn={false}
           />
         </div>
       </main>
