@@ -129,11 +129,19 @@ export default function page() {
       const response = await fetch(
         `https://api.themoviedb.org/3/${contentType}/${query}/recommendations?language=en-US&api_key=${API_KEY}`
       );
-
       const data = await response.json();
 
-      console.log(data);
+      if (data.results.length === 0) {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/${contentType}/${query}/similar?language=en-US&api_key=${API_KEY}`
+        );
+        const data = await response.json();
+        console.log(data);
+        setRecommendations(data.results);
+        return;
+      }
 
+      console.log(data);
       setRecommendations(data.results);
     } catch (error) {
       console.error();
