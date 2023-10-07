@@ -83,7 +83,7 @@ const Row = ({ title, movies, search, seeMoreBtn, isCast }: Props) => {
         />
         <div
           ref={rowRef}
-          className="flex items-center space-x-0.5 overflow-x-scroll md:space-x-2.5 md:p-2  scrollbar-hide"
+          className="flex items-center space-x-1.5 overflow-x-scroll md:space-x-2.5 md:p-2  scrollbar-hide"
         >
           {movies.map((movie) => (
             <Thumbnail key={movie.id} movie={movie} />
