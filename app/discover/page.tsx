@@ -1,9 +1,9 @@
 "use client";
 
 // import { modalState } from "@/atoms/modalAtom";
-import { Banner, Header, MainContents, Row } from "@/components";
+import { Banner, Header, MainContents, Row, ShowCastCard } from "@/components";
 import CircularRating from "@/components/CircularRating";
-import { Credit, Movie } from "@/typing";
+import { Cast, Credit, Movie } from "@/typing";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,6 +27,7 @@ export default function page() {
   const [credits, setCredits] = useState<Credit[]>([]);
   const [imdbId, setImdbId] = useState<string>("");
   const [recommendations, setRecommendations] = useState<Movie[]>([]);
+  const [cast, setCast] = useState<Cast[]>([]);
 
   const query =
     searchParams.get("movie")?.split("-")[0] ||
@@ -60,13 +61,15 @@ export default function page() {
   };
 
   const fetchCredits = async () => {
-    if (contentType === "movie") {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/${contentType}/${query}/credits?language=en-US&api_key=${API_KEY}`
-      );
-      const data = await response.json();
-      // console.log(data);
+    const response = await fetch(
+      `https://api.themoviedb.org/3/${contentType}/${query}/credits?language=en-US&api_key=${API_KEY}`
+    );
+    const data = await response.json();
+    // console.log(data);
 
+    setCast(data.cast);
+
+    if (contentType === "movie") {
       const jobTitlesToFilter = [
         "Screenplay",
         "Story",
@@ -184,7 +187,10 @@ export default function page() {
             contentType={contentType}
           />
         </div>
-        <div className="relative pt-7 mt-8 pl-4 pb-24 lg:pl-16">
+        <div className="relative pt-5 md:pt-7 mt-5 md:mt-8 pl-4 pb-5 lg:pl-16">
+          <ShowCastCard casts={cast} title="Cast" />
+        </div>
+        <div className="relative pt-5 md:pt-7 mt-3 md:mt-7 pl-4 pb-5 md:pb-24 lg:pl-16">
           <Row
             title="People Also Like"
             movies={recommendations}
