@@ -86,7 +86,7 @@ const Row = ({ title, casts, search }: Props) => {
                   !cast.profile_path && "hidden"
                 } relative h-[120px] min-w-[100px]  cursor-pointer transition duration-200 ease-out md:h-[180px] md:min-w-[128px] `}
                 onClick={() => {
-                  router.push(`discover?person=${cast.cast_id}`);
+                  router.push(`discover?person=${cast.id}`);
                 }}
               >
                 <Image
@@ -100,7 +100,7 @@ const Row = ({ title, casts, search }: Props) => {
                 <p className="flex justify-start pt-2 md:pt-3 px-2 text-xs md:text-sm font-medium">
                   {cast.name}
                 </p>
-                <span className="mt-1 md:mt-2 flex justify-start font-light md:font-normal text-xs px-2">
+                <span className="mt-1 md:mt-2 flex justify-start font-light md:font-normal text-xs px-2 pb-1">
                   {cast.character}
                 </span>
               </div>

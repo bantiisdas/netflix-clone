@@ -78,6 +78,26 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
     setScreenWidth(window.innerWidth);
   };
 
+  const copyUrl = () => {
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Create a temporary input element to copy the URL
+    const tempInput = document.createElement("input");
+    tempInput.value = currentUrl;
+    document.body.appendChild(tempInput);
+
+    // Select the URL text and copy it to the clipboard
+    tempInput.select();
+    document.execCommand("copy");
+
+    // Remove the temporary input element
+    document.body.removeChild(tempInput);
+
+    // Optionally, you can provide feedback to the user
+    alert("Current URL copied to clipboard");
+  };
+
   useEffect(() => {
     // console.log(contentType);
 
@@ -187,8 +207,8 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
                 <BookmarkIcon className="movieDetailsIcons" />
               </div>
 
-              <div className="movieDetailsIconsParent">
-                <StarIcon className="movieDetailsIcons" />
+              <div className="movieDetailsIconsParent cursor-pointer">
+                <StarIcon className="movieDetailsIcons" onClick={copyUrl} />
               </div>
 
               <div
