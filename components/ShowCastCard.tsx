@@ -66,7 +66,7 @@ const Row = ({ title, casts, search }: Props) => {
       </div>
       <div className="group relative md:-ml-2">
         <ChevronLeftIcon
-          className={`absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
+          className={`hidden md:absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
             !isMoved && "hidden"
           } `}
           onClick={() => handleClick("left")}
@@ -108,7 +108,7 @@ const Row = ({ title, casts, search }: Props) => {
           ))}
         </div>
         <ChevronRightIcon
-          className={`absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
+          className={`hidden md:absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100 ${
             isAtEnd && "hidden"
           }`}
           onClick={() => handleClick("right")}
