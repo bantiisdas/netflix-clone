@@ -1,6 +1,5 @@
 "use client";
 
-import useAuth from "@/hooks/useAuth";
 import {
   BellIcon,
   MagnifyingGlassIcon,
@@ -12,13 +11,13 @@ import BasicMenu from "./BasicMenu";
 import { Box, LinearProgress } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SearchComponent from "./SearchComponent";
+import { SignedOut, UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isScrolled, setIsScrolled] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
-  const { logOut } = useAuth();
 
   const selectedPage = document.getElementById(pathname);
   if (selectedPage) selectedPage.classList.add("selectedHeaderLink");
@@ -111,14 +110,18 @@ const Header = () => {
         {/* <Link
             href="/account"
           > */}
-        <img
-          onClick={logOut}
-          src="https://rb.gy/g1pwyx"
-          alt=""
-          className={`${
-            showSearchBar && "hidden sm:flex"
-          } cursor-pointer rounded`}
-        />
+        <UserButton afterSignOutUrl="/" />
+        <SignedOut>
+          <Link href="sign-in">
+            <img
+              src="https://rb.gy/g1pwyx"
+              alt=""
+              className={`${
+                showSearchBar && "hidden sm:flex"
+              } cursor-pointer rounded`}
+            />
+          </Link>
+        </SignedOut>
         {/* </Link> */}
       </div>
     </header>

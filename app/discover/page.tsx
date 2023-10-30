@@ -172,7 +172,7 @@ export default function page() {
           <div className="absolute h-[30vh] sm:h-full -z-10 w-full opacity-95 sm:opacity-20 ">
             <Image
               src={`https://image.tmdb.org/t/p/original${show?.backdrop_path}`} // Provide the URL for the backdrop image
-              alt="Elemental" // Set the alt text for accessibility
+              alt={show?.name || show?.title || "Backdrop"} // Set the alt text for accessibility
               fill
               className="w-full h-full object-cover"
             />
