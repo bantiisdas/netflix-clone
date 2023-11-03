@@ -4,7 +4,6 @@ import { FilterQuery, SortOrder } from "mongoose";
 import { revalidatePath } from "next/cache";
 
 import User from "../models/user.model";
-
 import { connectToDB } from "../mongoose";
 import path from "path";
 
@@ -29,6 +28,33 @@ export async function createUser(userData: CreateUserParams) {
   }
 }
 
+interface UpdateUserParams {
+  clerkId: string;
+  updateData: {
+    name: string;
+    username: string;
+    email: string;
+    picture: string;
+  };
+}
+
+export async function updateUser(params: UpdateUserParams) {
+  try {
+    connectToDB();
+
+    const { clerkId, updateData } = params;
+
+    await User.findOneAndUpdate({ clerkId }, updateData, {
+      new: true,
+    });
+
+    // revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function fetchUser(userId: string) {
   try {
     connectToDB();
@@ -36,39 +62,5 @@ export async function fetchUser(userId: string) {
     return await User.findOne({ id: userId });
   } catch (error: any) {
     throw new Error(`Failed to fetch user: ${error.message}`);
-  }
-}
-
-interface UpdateUserParams {
-  userId: string;
-  username: string;
-  name: string;
-  bio: string;
-  image: string;
-}
-
-export async function updateUser({
-  userId,
-  bio,
-  name,
-  username,
-  image,
-}: UpdateUserParams): Promise<void> {
-  try {
-    connectToDB();
-
-    await User.findOneAndUpdate(
-      { id: userId },
-      {
-        username: username.toLowerCase(),
-        name,
-        bio,
-        image,
-        onboarded: true,
-      },
-      { upsert: true }
-    );
-  } catch (error: any) {
-    throw new Error(`Failed to create/update user: ${error.message}`);
   }
 }
