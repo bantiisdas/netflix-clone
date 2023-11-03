@@ -1,10 +1,10 @@
 "use client";
 
-import { modalState, movieState } from "@/atoms/modalAtom";
+// import { modalState, movieState } from "@/atoms/modalAtom";
 import { Cast, Movie } from "@/typing";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRecoilState } from "recoil";
+// import { useRecoilState } from "recoil";
 
 interface Props {
   movie: Movie;
@@ -12,8 +12,8 @@ interface Props {
 }
 
 const Thumbnail = ({ movie, isCast }: Props) => {
-  const [showModal, setShowModal] = useRecoilState(modalState);
-  const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
+  // const [showModal, setShowModal] = useRecoilState(modalState);
+  // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
   const router = useRouter();
 
   return (

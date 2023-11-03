@@ -10,7 +10,7 @@ import GridCard from "./GridCard";
 import TvShows from "./TvShows";
 import NewPopular from "./NewPopular";
 import GridView from "./GridView";
-import ShowCastCard from "./ShowCastCard";
+import CastCards from "./CastCards";
 
 export {
   Header,
@@ -25,5 +25,5 @@ export {
   TvShows,
   NewPopular,
   GridView,
-  ShowCastCard,
+  CastCards,
 };

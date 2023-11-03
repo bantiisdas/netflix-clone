@@ -1,18 +1,9 @@
 "use client";
 
-import { Cast, Movie } from "@/typing";
+import { Cast } from "@/typing";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import Thumbnail from "./Thumbnail";
-import ShowCastCard from "./ShowCastCard";
-import {
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-  useLayoutEffect,
-} from "react";
-import { useRecoilState } from "recoil";
-import { gridMovieState } from "@/atoms/modalAtom";
+
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -22,7 +13,7 @@ interface Props {
   search?: string;
 }
 
-const Row = ({ title, casts, search }: Props) => {
+const CastCard = ({ title, casts, search }: Props) => {
   // const [gridMovies, setGridMovies] = useRecoilState(gridMovieState);
 
   const router = useRouter();
@@ -118,4 +109,4 @@ const Row = ({ title, casts, search }: Props) => {
   );
 };
 
-export default Row;
+export default CastCard;

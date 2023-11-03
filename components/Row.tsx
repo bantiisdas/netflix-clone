@@ -3,16 +3,9 @@
 import { Cast, Movie } from "@/typing";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Thumbnail from "./Thumbnail";
-import ShowCastCard from "./ShowCastCard";
-import {
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-  useLayoutEffect,
-} from "react";
-import { useRecoilState } from "recoil";
-import { gridMovieState } from "@/atoms/modalAtom";
+
+import { useRef, useState } from "react";
+
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -20,10 +13,9 @@ interface Props {
   movies: Movie[];
   search?: string;
   seeMoreBtn?: boolean;
-  isCast?: boolean;
 }
 
-const Row = ({ title, movies, search, seeMoreBtn, isCast }: Props) => {
+const Row = ({ title, movies, search, seeMoreBtn }: Props) => {
   // const [gridMovies, setGridMovies] = useRecoilState(gridMovieState);
 
   const router = useRouter();

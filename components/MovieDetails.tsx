@@ -10,32 +10,69 @@ import {
   BookmarkIcon,
   PlayIcon,
 } from "@heroicons/react/20/solid";
-import { useRecoilState } from "recoil";
-import { modalState, movieState } from "@/atoms/modalAtom";
+// import { useRecoilState } from "recoil";
+// import { modalState, movieState } from "@/atoms/modalAtom";
 import Modal from "./Modal";
 import { useSearchParams } from "next/navigation";
 import { useColor } from "color-thief-react";
+import { updateUser } from "@/lib/actions/user.actions";
+import { updateLikedList } from "@/lib/actions/list.actions";
 
 interface Props {
   show: Movie | null;
   credits: Credit[];
   imdbId: string;
   contentType: string;
+  userInfo: {
+    id: string;
+    name: string;
+    username: string;
+    img: string;
+  };
 }
 
 const OMDB_API_KEY = process.env.NEXT_PUBLIC_OMDB_API_KEY;
 
-const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
+const MovieDetails = ({
+  show,
+  credits,
+  imdbId,
+  contentType,
+  userInfo,
+}: Props) => {
   const [omdbData, setOmdbData] = useState<any>();
-  const [showModal, setShowModal] = useRecoilState(modalState);
-  const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
+  // const [showModal, setShowModal] = useRecoilState(modalState);
+  // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const searchParams = useSearchParams();
 
   const playBtnClick = () => {
-    setCurrentMovie(show);
-    setShowModal(true);
+    // setCurrentMovie(show);
+    // setShowModal(true);
   };
+
+  const likeBtnClick = () => {
+    updateUser({
+      userId: userInfo.id,
+      name: userInfo.name,
+      username: userInfo.username,
+      image: userInfo.img,
+      bio: "",
+    });
+
+    updateLikedList({
+      ownerId: userInfo.id,
+      movieDetails: {
+        name: show?.name || show?.title || show?.original_name || "",
+        showId: show?.id || "",
+        type: show?.media_type || "",
+        backdropPath: show?.backdrop_path || "",
+        posterPath: show?.backdrop_path || "",
+      },
+    });
+  };
+
+  console.log(userInfo);
 
   const showYear = () => {
     let showYearstring = `123`;
@@ -199,7 +236,7 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
                 <ListBulletIcon className="movieDetailsIcons" />
               </div>
 
-              <div className="movieDetailsIconsParent">
+              <div className="movieDetailsIconsParent" onClick={likeBtnClick}>
                 <HeartIcon className="movieDetailsIcons" />
               </div>
 
@@ -269,7 +306,7 @@ const MovieDetails = ({ show, credits, imdbId, contentType }: Props) => {
           </div>
         </div>
       </div>
-      {showModal && <Modal />}
+      {/* {showModal && <Modal />} */}
     </>
   );
 };
