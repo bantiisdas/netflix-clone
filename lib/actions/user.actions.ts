@@ -55,12 +55,17 @@ export async function updateUser(params: UpdateUserParams) {
   }
 }
 
-export async function fetchUser(userId: string) {
+export async function getUserById(params: any) {
   try {
     connectToDB();
 
-    return await User.findOne({ id: userId });
-  } catch (error: any) {
-    throw new Error(`Failed to fetch user: ${error.message}`);
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }

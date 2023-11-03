@@ -6,7 +6,7 @@ import { connectToDB } from "../mongoose";
 
 interface Props {
   ownerId: string;
-  movieDetails: {
+  showDetails: {
     showId: string;
     type: string;
     name: string;
@@ -14,31 +14,62 @@ interface Props {
     backdropPath: string;
   };
 }
-export async function updateLikedList({ ownerId, movieDetails }: Props) {
+// export async function updateLikedList({ ownerId, movieDetails }: Props) {
+//   try {
+//     connectToDB();
+//     // Find the likedList for the owner
+//     const likedList = await List.findOne({
+//       owner: ownerId,
+//       listType: "likedList",
+//     });
+
+//     if (likedList) {
+//       // LikedList already exists, so update it with movie details
+//       likedList.shows.push(movieDetails);
+//       await likedList.save();
+//     } else {
+//       // LikedList doesn't exist, create a new one
+//       const newLikedList = new List({
+//         name: "LikedList",
+//         listType: "likedList",
+//         owner: ownerId,
+//         shows: [movieDetails],
+//       });
+//       await newLikedList.save();
+//     }
+//   } catch (error) {
+//     // Handle any errors that occur during the process
+//     console.error("Error updating likedList:", error);
+//   }
+// }
+
+export async function updateToLikedList({ ownerId, showDetails }: Props) {
   try {
     connectToDB();
-    // Find the likedList for the owner
-    const likedList = await List.findOne({
+
+    // Check if the user exists
+    const user = await User.findById(ownerId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Create a new "likedList" with the name "likedList"
+    const likedList = new List({
+      name: "likedList",
+      listType: "liked",
       owner: ownerId,
-      listType: "likedList",
+      shows: [showDetails],
     });
 
-    if (likedList) {
-      // LikedList already exists, so update it with movie details
-      likedList.shows.push(movieDetails);
-      await likedList.save();
-    } else {
-      // LikedList doesn't exist, create a new one
-      const newLikedList = new List({
-        name: "LikedList",
-        listType: "likedList",
-        owner: ownerId,
-        shows: [movieDetails],
-      });
-      await newLikedList.save();
-    }
+    // Save the "likedList" to the database
+    await likedList.save();
+
+    // Update the "liked" field in the user's document
+    user.liked = likedList._id;
+    await user.save();
+
+    return likedList;
   } catch (error) {
-    // Handle any errors that occur during the process
-    console.error("Error updating likedList:", error);
+    throw error;
   }
 }

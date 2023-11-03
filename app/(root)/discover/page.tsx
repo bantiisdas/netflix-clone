@@ -10,6 +10,9 @@ import {
   fetchRecommendations,
   fetchSingleShowDetails,
 } from "@/utils";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import { getUserById } from "@/lib/actions/user.actions";
 
 interface SearchProps {
   searchParams: {
@@ -20,6 +23,11 @@ interface SearchProps {
 }
 
 export default async function page({ searchParams }: SearchProps) {
+  const { userId } = auth();
+  if (!userId) redirect("/sign-in");
+
+  const mongoUser = await getUserById({ userId });
+
   const query =
     searchParams.movie?.split("-")[0] ||
     searchParams.tv?.split("-")[0] ||
@@ -30,13 +38,6 @@ export default async function page({ searchParams }: SearchProps) {
     : searchParams.tv
     ? "tv"
     : "person";
-
-  const userInfo = {
-    id: "hi",
-    name: "hi",
-    username: "hi",
-    img: "hi",
-  };
 
   const showDetails = await fetchSingleShowDetails(contentType, query);
 
@@ -68,7 +69,7 @@ export default async function page({ searchParams }: SearchProps) {
           credits={credits}
           imdbId={showDetails.imdb_id}
           contentType={contentType}
-          userInfo={userInfo}
+          userId={mongoUser._id}
         />
       </div>
       <div className="relative pt-5 md:pt-7 mt-5 md:mt-8 pl-4 pb-5 lg:pl-16">

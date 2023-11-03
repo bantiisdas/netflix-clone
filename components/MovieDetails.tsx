@@ -16,19 +16,14 @@ import Modal from "./Modal";
 import { useSearchParams } from "next/navigation";
 import { useColor } from "color-thief-react";
 import { updateUser } from "@/lib/actions/user.actions";
-import { updateLikedList } from "@/lib/actions/list.actions";
+import { updateToLikedList } from "@/lib/actions/list.actions";
 
 interface Props {
   show: Movie | null;
   credits: Credit[];
   imdbId: string;
   contentType: string;
-  userInfo: {
-    id: string;
-    name: string;
-    username: string;
-    img: string;
-  };
+  userId: string;
 }
 
 const OMDB_API_KEY = process.env.NEXT_PUBLIC_OMDB_API_KEY;
@@ -38,7 +33,7 @@ const MovieDetails = ({
   credits,
   imdbId,
   contentType,
-  userInfo,
+  userId,
 }: Props) => {
   const [omdbData, setOmdbData] = useState<any>();
   // const [showModal, setShowModal] = useRecoilState(modalState);
@@ -52,27 +47,17 @@ const MovieDetails = ({
   };
 
   const likeBtnClick = () => {
-    updateUser({
-      userId: userInfo.id,
-      name: userInfo.name,
-      username: userInfo.username,
-      image: userInfo.img,
-      bio: "",
-    });
-
-    updateLikedList({
-      ownerId: userInfo.id,
-      movieDetails: {
-        name: show?.name || show?.title || show?.original_name || "",
-        showId: show?.id || "",
+    updateToLikedList({
+      ownerId: userId,
+      showDetails: {
+        showId: "123",
         type: show?.media_type || "",
-        backdropPath: show?.backdrop_path || "",
+        name: show?.name || show?.title || show?.original_name || "",
         posterPath: show?.backdrop_path || "",
+        backdropPath: show?.backdrop_path || "",
       },
     });
   };
-
-  console.log(userInfo);
 
   const showYear = () => {
     let showYearstring = `123`;
