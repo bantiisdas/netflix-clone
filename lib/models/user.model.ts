@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   email: { type: String },
-  image: { type: String },
+  picture: { type: String },
   bio: { type: String },
   liked: {
     type: mongoose.Schema.Types.ObjectId,
