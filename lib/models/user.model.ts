@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
   clerkId: { type: String, required: true },
   username: { type: String, required: true, unique: true },
   name: { type: String, required: true },
+  email: { type: String },
   image: { type: String },
   bio: { type: String },
   liked: {
@@ -24,10 +25,6 @@ const userSchema = new mongoose.Schema({
       ref: "List",
     },
   ],
-  onboarded: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
