@@ -31,15 +31,15 @@ async function Page() {
     <main className="relative">
       <Header />
       <div className="relative pt-5 md:pt-7 mt-3 md:mt-20 pl-4 pb-5 md:pb-24 lg:pl-16 lg:space-y-24">
+        <MyListRow
+          title="Saved to Watch Later"
+          shows={watchLaterJson}
+          seeMoreBtn={false}
+        />
         <MyListRow title="You Liked" shows={likedListJson} seeMoreBtn={false} />
         <MyListRow
           title="You Watched"
           shows={watchedListJson}
-          seeMoreBtn={false}
-        />
-        <MyListRow
-          title="Saved to Watch Later"
-          shows={watchLaterJson}
           seeMoreBtn={false}
         />
       </div>
