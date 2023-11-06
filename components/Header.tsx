@@ -105,7 +105,7 @@ const Header = () => {
 
         {/* <SearchComponent/> */}
 
-        <p className="hidden lg:inline">Kids</p>
+        {/* <p className="hidden lg:inline">Kids</p> */}
         {/* <BellIcon className={`${showSearchBar && "hidden sm:flex"} h-6 w-6`}/> */}
         {/* <Link
             href="/account"

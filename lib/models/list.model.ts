@@ -1,5 +1,23 @@
 import mongoose from "mongoose";
 
+const showDetailsSchema = new mongoose.Schema({
+  showId: {
+    type: String,
+  },
+  type: {
+    type: String,
+  },
+  name: {
+    type: String,
+  },
+  posterPath: {
+    type: String,
+  },
+  backdropPath: {
+    type: String,
+  },
+});
+
 const listSchema = new mongoose.Schema({
   name: { type: String, required: true },
   listType: { type: String, required: true },
@@ -17,11 +35,7 @@ const listSchema = new mongoose.Schema({
   ],
   shows: [
     {
-      showId: String,
-      type: String,
-      name: String,
-      posterPath: String,
-      backdropPath: String,
+      type: showDetailsSchema,
     },
   ],
   createdAt: {

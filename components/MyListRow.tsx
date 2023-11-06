@@ -1,34 +1,36 @@
 "use client";
 
-import { Cast, Movie } from "@/typing";
+import { Movie } from "@/typing";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import Thumbnail from "./Thumbnail";
-
 import { useRef, useState } from "react";
-
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Props {
   title: string;
-  movies: Movie[];
+  shows: string;
   search?: string;
   seeMoreBtn?: boolean;
 }
+interface showDetailsProps {
+  showId: string;
+  type: string;
+  name: string;
+  posterPath: string;
+  backdropPath: string;
+  _id: string;
+}
 
-const Row = ({ title, movies, search, seeMoreBtn }: Props) => {
-  // const [gridMovies, setGridMovies] = useRecoilState(gridMovieState);
-
+const MyListRow = ({ title, shows, search, seeMoreBtn }: Props) => {
   const router = useRouter();
 
   const rowRef = useRef<HTMLDivElement>(null);
   const [isMoved, setIsMoved] = useState(false);
   const [isAtFirst, setiIsAtFirst] = useState(false);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  // console.log(shows);
 
-  // if (rowRef.current) {
-  //   const { scrollLeft, clientWidth, scrollWidth } = rowRef.current;
-  //   setiIsAtFirst(scrollLeft === 0);
-  // }
+  const showDetails = JSON.parse(shows);
 
   const handleClick = (direction: String) => {
     setIsMoved(true);
@@ -53,13 +55,12 @@ const Row = ({ title, movies, search, seeMoreBtn }: Props) => {
   return (
     <div className="h-40 space-y-0.5 md:space-y-2">
       <div className="flex items-center justify-between">
-        <h2 className="w-56 cursor-pointer text-sm font-semibold text-[#e5e5e5] transition duration-200 hover:text-white md:text-2xl">
+        <h2 className="w-96 cursor-pointer text-sm font-semibold text-[#e5e5e5] transition duration-200 hover:text-white md:text-2xl">
           {title}
         </h2>
         <button
           className={`${seeMoreBtn === false ? "hidden" : ""} pr-8`}
           onClick={() => {
-            // setGridMovies(movies)
             router.push(`${search}`);
           }}
         >
@@ -77,8 +78,27 @@ const Row = ({ title, movies, search, seeMoreBtn }: Props) => {
           ref={rowRef}
           className="flex items-center space-x-1.5 overflow-x-scroll md:space-x-2.5 md:p-2  scrollbar-hide"
         >
-          {movies.map((movie) => (
-            <Thumbnail key={movie.id} movie={movie} />
+          {showDetails.map((show: showDetailsProps) => (
+            <div
+              key={show._id}
+              className={`${
+                !(show.backdropPath || show.posterPath) && "hidden"
+              } relative h-28 min-w-[180px] cursor-pointer transition duration-200 ease-out md:h-36 md:min-w-[260px] md:hover:scale-105`}
+              onClick={() => {
+                router.push(
+                  `discover?${show.type || "movie"}=${show.showId}-${show.name}`
+                );
+              }}
+            >
+              <Image
+                src={`https://image.tmdb.org/t/p/w400${
+                  show.backdropPath || show.posterPath
+                }`}
+                alt="Movie"
+                fill
+                className="rounded-sm object-cover md:rounded"
+              />
+            </div>
           ))}
         </div>
         <ChevronRightIcon
@@ -92,4 +112,4 @@ const Row = ({ title, movies, search, seeMoreBtn }: Props) => {
   );
 };
 
-export default Row;
+export default MyListRow;

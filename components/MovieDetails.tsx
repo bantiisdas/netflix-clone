@@ -16,14 +16,23 @@ import Modal from "./Modal";
 import { useSearchParams } from "next/navigation";
 import { useColor } from "color-thief-react";
 import { updateUser } from "@/lib/actions/user.actions";
-import { updateToLikedList } from "@/lib/actions/list.actions";
+import {
+  removeFromLikedList,
+  updateToLikedList,
+  updateToWatchLaterList,
+  updateToWatchedList,
+} from "@/lib/actions/list.actions";
 
 interface Props {
   show: Movie | null;
   credits: Credit[];
   imdbId: string;
+  showId: string;
   contentType: string;
   userId: string;
+  isLiked: boolean;
+  isWatched: boolean;
+  isSavedForLater: boolean;
 }
 
 const OMDB_API_KEY = process.env.NEXT_PUBLIC_OMDB_API_KEY;
@@ -32,14 +41,21 @@ const MovieDetails = ({
   show,
   credits,
   imdbId,
+  showId,
   contentType,
   userId,
+  isLiked,
+  isWatched,
+  isSavedForLater,
 }: Props) => {
   const [omdbData, setOmdbData] = useState<any>();
   // const [showModal, setShowModal] = useRecoilState(modalState);
   // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const searchParams = useSearchParams();
+  const [liked, setLiked] = useState<boolean>(isLiked);
+  const [watched, setWatched] = useState<boolean>(isWatched);
+  const [savedForLater, setSavedForLater] = useState<boolean>(isSavedForLater);
 
   const playBtnClick = () => {
     // setCurrentMovie(show);
@@ -47,13 +63,46 @@ const MovieDetails = ({
   };
 
   const likeBtnClick = () => {
-    updateToLikedList({
+    if (liked) {
+      removeFromLikedList({
+        userId: userId,
+        showId: showId,
+        type: contentType,
+      });
+    } else {
+      updateToLikedList({
+        ownerId: userId,
+        showDetails: {
+          showId: show?.id.toString() || "",
+          type: show?.media_type || "movie",
+          name: show?.name || show?.title || show?.original_name || "",
+          posterPath: show?.poster_path || "",
+          backdropPath: show?.backdrop_path || "",
+        },
+      });
+    }
+  };
+  const watchedBtnClick = () => {
+    updateToWatchedList({
       ownerId: userId,
       showDetails: {
-        showId: "123",
-        type: show?.media_type || "",
+        showId: show?.id.toString() || "",
+        type: show?.media_type || "movie",
         name: show?.name || show?.title || show?.original_name || "",
-        posterPath: show?.backdrop_path || "",
+        posterPath: show?.poster_path || "",
+        backdropPath: show?.backdrop_path || "",
+      },
+    });
+  };
+
+  const watchLaterBtnClick = () => {
+    updateToWatchLaterList({
+      ownerId: userId,
+      showDetails: {
+        showId: show?.id.toString() || "",
+        type: show?.media_type || "movie",
+        name: show?.name || show?.title || show?.original_name || "",
+        posterPath: show?.poster_path || "",
         backdropPath: show?.backdrop_path || "",
       },
     });
@@ -217,19 +266,38 @@ const MovieDetails = ({
             </div>
 
             <div className="w-full sm:w-auto flex flex-row items-center justify-between sm:justify-center sm:gap-6 px-12 sm:px-0">
-              <div className="movieDetailsIconsParent">
-                <ListBulletIcon className="movieDetailsIcons" />
+              <div
+                className={`movieDetailsIconsParent ${
+                  savedForLater ? "text-red-500" : "text-white"
+                }`}
+              >
+                <ListBulletIcon
+                  className="movieDetailsIcons"
+                  onClick={watchLaterBtnClick}
+                />
               </div>
 
-              <div className="movieDetailsIconsParent" onClick={likeBtnClick}>
+              <div
+                className={`movieDetailsIconsParent ${
+                  liked ? "text-red-500" : "text-white"
+                }`}
+                onClick={likeBtnClick}
+              >
                 <HeartIcon className="movieDetailsIcons" />
               </div>
 
-              <div className="movieDetailsIconsParent">
-                <BookmarkIcon className="movieDetailsIcons" />
+              <div
+                className={`movieDetailsIconsParent ${
+                  watched ? "text-red-500" : "text-white"
+                }`}
+              >
+                <BookmarkIcon
+                  className="movieDetailsIcons"
+                  onClick={watchedBtnClick}
+                />
               </div>
 
-              <div className="movieDetailsIconsParent cursor-pointer">
+              <div className="movieDetailsIconsParent">
                 <StarIcon className="movieDetailsIcons" onClick={copyUrl} />
               </div>
 
