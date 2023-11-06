@@ -270,7 +270,8 @@ export async function isShowLikedByUser({
     const likedList = await List.findById(user.liked);
 
     if (!likedList) {
-      throw new Error("No likedList found for the user");
+      // throw new Error("No likedList found for the user");
+      return false;
     }
 
     const isLiked = likedList.shows.find(
@@ -299,7 +300,8 @@ export async function isShowWatchedByUser({
     const watchedList = await List.findById(user.watched);
 
     if (!watchedList) {
-      throw new Error("No watchedlist found for the user");
+      return false;
+      // throw new Error("No watchedlist found for the user");
     }
 
     const isWatched = watchedList.shows.find(
@@ -328,7 +330,8 @@ export async function isShowSavedForLaterByUser({
     const watchLaterList = await List.findById(user.watchLater);
 
     if (!watchLaterList) {
-      throw new Error("No watchLaterList found for the user");
+      return false;
+      // throw new Error("No watchLaterList found for the user");
     }
 
     const isWatchLater = watchLaterList.shows.find(
