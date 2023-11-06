@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import List from "../models/list.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
@@ -58,6 +59,8 @@ export async function updateToLikedList({ ownerId, showDetails }: Props) {
     user.liked = likedList._id;
     await user.save();
 
+    revalidatePath("/discover");
+    return true;
     // return likedList;
   } catch (error) {
     throw error;
@@ -108,6 +111,7 @@ export async function updateToWatchedList({ ownerId, showDetails }: Props) {
     user.watched = watchedList._id;
     await user.save();
 
+    return true;
     // return watchedList;
   } catch (error) {
     throw error;
@@ -158,6 +162,7 @@ export async function updateToWatchLaterList({ ownerId, showDetails }: Props) {
     user.watchLater = watchLaterList._id;
     await user.save();
 
+    return true;
     // return watchLaterList;
   } catch (error) {
     throw error;
@@ -365,7 +370,89 @@ export async function removeFromLikedList({
 
       // Save the updated user document
       await likedList.save();
+
+      revalidatePath("/discover");
+      return true;
     }
+    return false;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function removeFromWatchedList({
+  userId,
+  showId,
+  type,
+}: isInTheListProps) {
+  try {
+    // Find the user by their userId
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const watchedList = await List.findById(user.watched);
+
+    if (!watchedList) {
+      throw new Error("No watchedList found for the user");
+    }
+
+    // Find the index of the show in the watchedList based on showId and type
+    const showIndex = watchedList.shows.findIndex(
+      (show: showDetailsProps) => show.showId === showId && show.type === type
+    );
+
+    if (showIndex !== -1) {
+      // Remove the show entry from the watchedList array
+      watchedList.shows.splice(showIndex, 1);
+
+      // Save the updated user document
+      await watchedList.save();
+
+      return true;
+    }
+    return false;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function removeFromWatchLaterList({
+  userId,
+  showId,
+  type,
+}: isInTheListProps) {
+  try {
+    // Find the user by their userId
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const watchLaterList = await List.findById(user.watchLater);
+
+    if (!watchLaterList) {
+      throw new Error("No watchLaterList found for the user");
+    }
+
+    // Find the index of the show in the watchedList based on showId and type
+    const showIndex = watchLaterList.shows.findIndex(
+      (show: showDetailsProps) => show.showId === showId && show.type === type
+    );
+
+    if (showIndex !== -1) {
+      // Remove the show entry from the watchLaterList array
+      watchLaterList.shows.splice(showIndex, 1);
+
+      // Save the updated user document
+      await watchLaterList.save();
+
+      return true;
+    }
+    return false;
   } catch (error) {
     throw error;
   }

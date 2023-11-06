@@ -10,18 +10,22 @@ import {
   BookmarkIcon,
   PlayIcon,
 } from "@heroicons/react/20/solid";
-// import { useRecoilState } from "recoil";
-// import { modalState, movieState } from "@/atoms/modalAtom";
 import Modal from "./Modal";
 import { useSearchParams } from "next/navigation";
 import { useColor } from "color-thief-react";
-import { updateUser } from "@/lib/actions/user.actions";
 import {
   removeFromLikedList,
+  removeFromWatchLaterList,
+  removeFromWatchedList,
   updateToLikedList,
   updateToWatchLaterList,
   updateToWatchedList,
 } from "@/lib/actions/list.actions";
+import {
+  CheckIcon,
+  PaperAirplaneIcon,
+  PlusIcon,
+} from "@heroicons/react/24/solid";
 
 interface Props {
   show: Movie | null;
@@ -62,15 +66,16 @@ const MovieDetails = ({
     // setShowModal(true);
   };
 
-  const likeBtnClick = () => {
+  const likeBtnClick = async () => {
     if (liked) {
-      removeFromLikedList({
+      const removed = await removeFromLikedList({
         userId: userId,
         showId: showId,
         type: contentType,
       });
+      if (removed) setLiked(false);
     } else {
-      updateToLikedList({
+      const added = await updateToLikedList({
         ownerId: userId,
         showDetails: {
           showId: show?.id.toString() || "",
@@ -80,32 +85,53 @@ const MovieDetails = ({
           backdropPath: show?.backdrop_path || "",
         },
       });
+      if (added) setLiked(true);
     }
   };
-  const watchedBtnClick = () => {
-    updateToWatchedList({
-      ownerId: userId,
-      showDetails: {
-        showId: show?.id.toString() || "",
-        type: show?.media_type || "movie",
-        name: show?.name || show?.title || show?.original_name || "",
-        posterPath: show?.poster_path || "",
-        backdropPath: show?.backdrop_path || "",
-      },
-    });
+  const watchedBtnClick = async () => {
+    if (watched) {
+      const removed = await removeFromWatchedList({
+        userId: userId,
+        showId: showId,
+        type: contentType,
+      });
+      if (removed) setWatched(false);
+    } else {
+      const added = await updateToWatchedList({
+        ownerId: userId,
+        showDetails: {
+          showId: show?.id.toString() || "",
+          type: show?.media_type || "movie",
+          name: show?.name || show?.title || show?.original_name || "",
+          posterPath: show?.poster_path || "",
+          backdropPath: show?.backdrop_path || "",
+        },
+      });
+      if (added) setWatched(true);
+    }
   };
 
-  const watchLaterBtnClick = () => {
-    updateToWatchLaterList({
-      ownerId: userId,
-      showDetails: {
-        showId: show?.id.toString() || "",
-        type: show?.media_type || "movie",
-        name: show?.name || show?.title || show?.original_name || "",
-        posterPath: show?.poster_path || "",
-        backdropPath: show?.backdrop_path || "",
-      },
-    });
+  const watchLaterBtnClick = async () => {
+    if (savedForLater) {
+      const removed = await removeFromWatchLaterList({
+        userId: userId,
+        showId: showId,
+        type: contentType,
+      });
+      if (removed) setSavedForLater(false);
+    } else {
+      const added = await updateToWatchLaterList({
+        ownerId: userId,
+        showDetails: {
+          showId: show?.id.toString() || "",
+          type: show?.media_type || "movie",
+          name: show?.name || show?.title || show?.original_name || "",
+          posterPath: show?.poster_path || "",
+          backdropPath: show?.backdrop_path || "",
+        },
+      });
+      if (added) setSavedForLater(true);
+    }
   };
 
   const showYear = () => {
@@ -179,7 +205,7 @@ const MovieDetails = ({
       // Remove the event listener when the component unmounts
       window.removeEventListener("resize", handleResize);
     };
-  }, [imdbId, contentType, show]);
+  }, [imdbId, contentType, show, showId]);
 
   const { data, loading, error } = useColor(
     `https://image.tmdb.org/t/p/w500${show?.poster_path}`,
@@ -271,7 +297,7 @@ const MovieDetails = ({
                   savedForLater ? "text-red-500" : "text-white"
                 }`}
               >
-                <ListBulletIcon
+                <PlusIcon
                   className="movieDetailsIcons"
                   onClick={watchLaterBtnClick}
                 />
@@ -291,14 +317,17 @@ const MovieDetails = ({
                   watched ? "text-red-500" : "text-white"
                 }`}
               >
-                <BookmarkIcon
+                <CheckIcon
                   className="movieDetailsIcons"
                   onClick={watchedBtnClick}
                 />
               </div>
 
               <div className="movieDetailsIconsParent">
-                <StarIcon className="movieDetailsIcons" onClick={copyUrl} />
+                <PaperAirplaneIcon
+                  className="movieDetailsIcons"
+                  onClick={copyUrl}
+                />
               </div>
 
               <div

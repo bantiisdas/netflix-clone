@@ -1,4 +1,4 @@
-import Headers from "@/components/Headers";
+import Header from "@/components/Header";
 import MyListRow from "@/components/MyListRow";
 import {
   fetchLikedListData,
@@ -29,7 +29,7 @@ async function Page() {
 
   return (
     <main className="relative">
-      <Headers />
+      <Header />
       <div className="relative pt-5 md:pt-7 mt-3 md:mt-20 pl-4 pb-5 md:pb-24 lg:pl-16 lg:space-y-24">
         <MyListRow title="You Liked" shows={likedListJson} seeMoreBtn={false} />
         <MyListRow

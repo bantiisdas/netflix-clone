@@ -78,6 +78,6 @@ body {
   }
 
   .movieDetailsIcons {
-    @apply h-5 w-5;
+    @apply h-5 w-5 font-extrabold;
   }
 }

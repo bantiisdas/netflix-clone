@@ -64,7 +64,7 @@ export async function fetchRecommendations(contentType: string, query: string) {
   );
   const data = await response.json();
 
-  if (data.results.length === 0) {
+  if (data.results?.length === 0) {
     const response = await fetch(
       `https://api.themoviedb.org/3/${contentType}/${query}/similar?language=en-US&api_key=${API_KEY}`
     );
