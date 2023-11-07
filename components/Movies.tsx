@@ -1,10 +1,8 @@
 import { Movie } from "@/typing";
 import Thumbnail from "./Thumbnail";
-import Modal from "./Modal";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { gridMovieState, modalState } from "@/atoms/modalAtom";
-import { Row } from ".";
-import { useState } from "react";
+
+import Row from "./Row";
+import { Modal } from "@mui/material";
 
 // interface Props {
 //   movies: Movie[];
@@ -39,9 +37,9 @@ const Movies = ({
   crimeMovies,
   animatedMovies,
 }: Props) => {
-  const showModal = useRecoilValue(modalState);
+  // const showModal = useRecoilValue(modalState);
   // const [hideRows, setHideRows] = useState(false);
-  const gridMovies = useRecoilValue(gridMovieState);
+  // const gridMovies = useRecoilValue(gridMovieState);
 
   return (
     <>
@@ -80,7 +78,7 @@ const Movies = ({
         {/* <GridView gridMovies={gridMovies}/> */}
       </div>
 
-      {showModal && <Modal />}
+      {/* {showModal && <Modal />} */}
     </>
   );
 };

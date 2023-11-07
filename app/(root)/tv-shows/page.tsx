@@ -1,10 +1,11 @@
 "use client";
 
-import { Header, Movies, Thumbnail, TvShows } from "@/components";
+// import { Movies, Thumbnail, TvShows } from "@/components";
+import Header from "@/components/Header";
+import TvShows from "@/components/TvShows";
 import { Movie } from "@/typing";
 import requests from "@/utils/requests";
 import { useEffect, useState } from "react";
-import { RecoilRoot } from "recoil";
 
 interface Props {
   movies: Movie[];
@@ -87,24 +88,22 @@ const page = () => {
   }, []);
 
   return (
-    <RecoilRoot>
-      <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
-        <Header />
-        <TvShows
-          trendingTv={trendingTv}
-          sciFiFantTv={sciFiFantTv}
-          actionTv={actionTv}
-          warPoliticsTv={warPoliticsTv}
-          crimeTv={crimeTv}
-          animatedTv={animatedTv}
-          mysteryTv={mysteryTv}
-          comedyTv={comedyTv}
-        />
-        {/* <div className="flex justify-center items-center pb-5">
+    <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
+      <Header />
+      <TvShows
+        trendingTv={trendingTv}
+        sciFiFantTv={sciFiFantTv}
+        actionTv={actionTv}
+        warPoliticsTv={warPoliticsTv}
+        crimeTv={crimeTv}
+        animatedTv={animatedTv}
+        mysteryTv={mysteryTv}
+        comedyTv={comedyTv}
+      />
+      {/* <div className="flex justify-center items-center pb-5">
           <button className="text-black bg-white p-2 rounded" onClick={loadMoreMovies}>Load More</button>
         </div> */}
-      </main>
-    </RecoilRoot>
+    </main>
   );
 };
 

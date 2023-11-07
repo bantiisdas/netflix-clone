@@ -1,10 +1,11 @@
 "use client";
 
-import { Header, Movies, Thumbnail } from "@/components";
+import Header from "@/components/Header";
+import Movies from "@/components/Movies";
+// import { Header, Movies, Thumbnail } from "@/components";
 import { Movie } from "@/typing";
 import requests from "@/utils/requests";
 import { useEffect, useState } from "react";
-import { RecoilRoot } from "recoil";
 
 interface Props {
   movies: Movie[];
@@ -93,28 +94,26 @@ const page = () => {
   console.log(sciFiMovies);
 
   return (
-    <RecoilRoot>
-      <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
-        <Header />
-        <Movies
-          trendingMovies={trendingMovies}
-          actionMovies={actionMovies}
-          comedyMovies={comedyMovies}
-          documentaries={documentaries}
-          horrorMovies={horrorMovies}
-          romanceMovies={romanceMovies}
-          topRated={topRated}
-          sciFiMovies={sciFiMovies}
-          mysteryMovies={mysteryMovies}
-          warMovies={warMovies}
-          crimeMovies={crimeMovies}
-          animatedMovies={animatedMovies}
-        />
-        {/* <div className="flex justify-center items-center pb-5">
+    <main className="relative h-screen bg-gradient-to-b  lg:h-[140vh]">
+      <Header />
+      <Movies
+        trendingMovies={trendingMovies}
+        actionMovies={actionMovies}
+        comedyMovies={comedyMovies}
+        documentaries={documentaries}
+        horrorMovies={horrorMovies}
+        romanceMovies={romanceMovies}
+        topRated={topRated}
+        sciFiMovies={sciFiMovies}
+        mysteryMovies={mysteryMovies}
+        warMovies={warMovies}
+        crimeMovies={crimeMovies}
+        animatedMovies={animatedMovies}
+      />
+      {/* <div className="flex justify-center items-center pb-5">
           <button className="text-black bg-white p-2 rounded" onClick={loadMoreMovies}>Load More</button>
         </div> */}
-      </main>
-    </RecoilRoot>
+    </main>
   );
 };
 

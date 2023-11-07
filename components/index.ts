@@ -1,8 +1,8 @@
-import Header from "./Header";
+// import Header from "./Header";
 import Banner from "./Banner";
 import Row from "./Row";
 import Thumbnail from "./Thumbnail";
-import MainContents from "./MainContents";
+// import MainContents from "./MainContents";
 import Modal from "./Modal";
 import Movies from "./Movies";
 import BasicMenu from "./BasicMenu";
@@ -13,11 +13,11 @@ import GridView from "./GridView";
 import CastCards from "./CastCards";
 
 export {
-  Header,
+  // Header,
   Banner,
   Row,
   Thumbnail,
-  MainContents,
+  // MainContents,
   Modal,
   Movies,
   BasicMenu,

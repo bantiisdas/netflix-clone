@@ -87,7 +87,7 @@ export default async function page({ searchParams }: SearchProps) {
       <div className="relative pt-5 md:pt-7 mt-3 md:mt-7 pl-4 pb-5 md:pb-24 lg:pl-16">
         <Row
           movies={recommendations}
-          title="People Also Like"
+          title="People Also Liked"
           seeMoreBtn={false}
         />
       </div>

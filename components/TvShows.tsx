@@ -1,9 +1,9 @@
 import { Movie } from "@/typing";
 import Thumbnail from "./Thumbnail";
 import Modal from "./Modal";
-import { useRecoilValue } from "recoil";
-import { gridMovieState, modalState } from "@/atoms/modalAtom";
-import { Row } from ".";
+// import { useRecoilValue } from "recoil";
+// import { gridMovieState, modalState } from "@/atoms/modalAtom";
+import Row from "./Row";
 import { useState } from "react";
 
 // interface Props {
@@ -31,7 +31,7 @@ const TvShows = ({
   mysteryTv,
   comedyTv,
 }: Props) => {
-  const showModal = useRecoilValue(modalState);
+  // const showModal = useRecoilValue(modalState);
   // const [hideRows, setHideRows] = useState(false);
   // const gridMovies = useRecoilValue(gridMovieState);
 
@@ -59,7 +59,7 @@ const TvShows = ({
         {/* <GridView gridMovies={gridMovies}/> */}
       </div>
 
-      {showModal && <Modal />}
+      {/* {showModal && <Modal />} */}
     </>
   );
 };

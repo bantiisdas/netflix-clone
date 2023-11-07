@@ -29,6 +29,9 @@ import {
   PaperAirplaneIcon,
   PlusIcon,
 } from "@heroicons/react/24/solid";
+import { toast } from "sonner";
+import VideoPlayer from "./VideoPlayer";
+import { ShareLink } from "./ShareLink";
 
 interface Props {
   show: Movie | null;
@@ -60,11 +63,14 @@ const MovieDetails = ({
   const [liked, setLiked] = useState<boolean>();
   const [watched, setWatched] = useState<boolean>();
   const [savedForLater, setSavedForLater] = useState<boolean>();
+  const [loadTrailer, setLoadTrailer] = useState(false);
 
   const playBtnClick = () => {
-    // setCurrentMovie(show);
-    // setShowModal(true);
+    setLoadTrailer(true);
+    alert("Clicked");
   };
+
+  console.log(loadTrailer);
 
   const fetchSavedTOList = async () => {
     const isLikedByUser = await isShowLikedByUser({
@@ -96,7 +102,12 @@ const MovieDetails = ({
         showId: showId,
         type: contentType,
       });
-      if (removed) setLiked(false);
+      if (removed) {
+        setLiked(false);
+        toast.success("Removed from Liked");
+      } else {
+        toast.error("Failed while removing from Liked");
+      }
     } else {
       const added = await updateToLikedList({
         ownerId: userId,
@@ -108,7 +119,12 @@ const MovieDetails = ({
           backdropPath: show?.backdrop_path || "",
         },
       });
-      if (added) setLiked(true);
+      if (added) {
+        setLiked(true);
+        toast.success("Added to Liked");
+      } else {
+        toast.error("Failed while adding to Liked");
+      }
     }
   };
   const watchedBtnClick = async () => {
@@ -118,7 +134,12 @@ const MovieDetails = ({
         showId: showId,
         type: contentType,
       });
-      if (removed) setWatched(false);
+      if (removed) {
+        setWatched(false);
+        toast.success("Removed from Watched");
+      } else {
+        toast.error("Failed to remove from Watched");
+      }
     } else {
       const added = await updateToWatchedList({
         ownerId: userId,
@@ -130,7 +151,12 @@ const MovieDetails = ({
           backdropPath: show?.backdrop_path || "",
         },
       });
-      if (added) setWatched(true);
+      if (added) {
+        setWatched(true);
+        toast.success("Marked as Watched");
+      } else {
+        toast.error("Failed to marke as Watched");
+      }
     }
   };
 
@@ -141,7 +167,12 @@ const MovieDetails = ({
         showId: showId,
         type: contentType,
       });
-      if (removed) setSavedForLater(false);
+      if (removed) {
+        setSavedForLater(false);
+        toast.success("Removed from Watch Later");
+      } else {
+        toast.error("Failed to remove from Watch Later");
+      }
     } else {
       const added = await updateToWatchLaterList({
         ownerId: userId,
@@ -153,7 +184,12 @@ const MovieDetails = ({
           backdropPath: show?.backdrop_path || "",
         },
       });
-      if (added) setSavedForLater(true);
+      if (added) {
+        setSavedForLater(true);
+        toast.success("Saved to Watch Later");
+      } else {
+        toast.error("Failed while saving to Watch Later");
+      }
     }
   };
 
@@ -306,12 +342,8 @@ const MovieDetails = ({
 
               <div className="flex sm:hidden h-7 bg-gray-500 w-[1px]" />
 
-              <div
-                className="flex sm:hidden flex-row gap-2 cursor-pointer"
-                onClick={playBtnClick}
-              >
-                <PlayIcon className="h-6 w-6 text-white" />
-                Play Trailer
+              <div className="flex sm:hidden flex-row gap-2 cursor-pointer">
+                <VideoPlayer showId={showId} mediaType={contentType} />
               </div>
             </div>
 
@@ -320,11 +352,9 @@ const MovieDetails = ({
                 className={`movieDetailsIconsParent ${
                   savedForLater ? "text-red-500" : "text-white"
                 }`}
+                onClick={watchLaterBtnClick}
               >
-                <PlusIcon
-                  className="movieDetailsIcons"
-                  onClick={watchLaterBtnClick}
-                />
+                <PlusIcon className="movieDetailsIcons" />
               </div>
 
               <div
@@ -340,26 +370,18 @@ const MovieDetails = ({
                 className={`movieDetailsIconsParent ${
                   watched ? "text-red-500" : "text-white"
                 }`}
+                onClick={watchedBtnClick}
               >
-                <CheckIcon
-                  className="movieDetailsIcons"
-                  onClick={watchedBtnClick}
-                />
+                <CheckIcon className="movieDetailsIcons" />
               </div>
 
               <div className="movieDetailsIconsParent">
-                <PaperAirplaneIcon
-                  className="movieDetailsIcons"
-                  onClick={copyUrl}
-                />
+                {/* <PaperAirplaneIcon className="movieDetailsIcons" /> */}
+                <ShareLink />
               </div>
 
-              <div
-                className="hidden sm:flex flex-row gap-2 cursor-pointer"
-                onClick={playBtnClick}
-              >
-                <PlayIcon className="h-6 w-6 text-white" />
-                Play Trailer
+              <div className="hidden sm:flex flex-row gap-2 cursor-pointer">
+                <VideoPlayer showId={showId} mediaType={contentType} />
               </div>
             </div>
           </div>
