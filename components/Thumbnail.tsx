@@ -16,6 +16,8 @@ const Thumbnail = ({ movie, isCast }: Props) => {
   // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
   const router = useRouter();
 
+  const movieName = (movie?.name || movie?.title)?.replace(/ /g, "-");
+
   return (
     <div
       className={`${
@@ -23,9 +25,7 @@ const Thumbnail = ({ movie, isCast }: Props) => {
       } relative h-28 min-w-[180px] cursor-pointer transition duration-200 ease-out md:h-36 md:min-w-[260px] md:hover:scale-105`}
       onClick={() => {
         router.push(
-          `discover?${movie?.media_type || "movie"}=${movie.id}-${
-            movie?.name || movie?.title
-          }`
+          `discover?${movie?.media_type || "movie"}=${movie.id}-${movieName}`
         );
         // console.log(movie);
       }}

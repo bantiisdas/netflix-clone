@@ -9,6 +9,7 @@ import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { modalState, movieState } from "@/atoms/modalAtom";
 import { useRouter } from "next/navigation";
+import VideoPlayer from "./VideoPlayer";
 
 interface Props {
   bannerItem: Movie[];
@@ -26,6 +27,8 @@ const Banner = ({ bannerItem }: Props) => {
   useEffect(() => {
     setMovie(bannerItem[Math.floor(Math.random() * bannerItem.length)]);
   }, [bannerItem]);
+
+  const movieName = (movie?.name || movie?.title)?.replace(/ /g, "-");
 
   // console.log(movie);
 
@@ -89,13 +92,18 @@ const Banner = ({ bannerItem }: Props) => {
             // setShowModal(true);
           }}
         >
-          <FaPlay className="h-4 w-4 text-black md:h-7 md:w-7" /> Play
+          {/* <FaPlay className="h-4 w-4 text-black md:h-7 md:w-7" /> Play */}
+          <VideoPlayer
+            showId={movie?.id?.toString() || "396535"}
+            mediaType={movie?.media_type || "movie"}
+            path="/"
+          />
         </button>
         <button
           className="bannerButton bg-[gray]/70"
           onClick={() => {
             router.push(
-              `discover?movie=${movie?.id}-${movie?.name || movie?.title}`
+              `discover?${movie?.media_type}=${movie?.id}-${movieName}`
             );
           }}
         >

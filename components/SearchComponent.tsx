@@ -82,9 +82,9 @@ export default function SearchComponent({ handleClickFunction }: Props) {
                     value={item}
                     onClick={() => {
                       router.push(
-                        `discover?${item.media_type}=${item.id}-${
+                        `discover?${item.media_type}=${item.id}-${(
                           item.name || item.title
-                        }`
+                        )?.replace(/ /g, "-")}`
                       );
                       setShowSearchBar(false);
                       handleClickFunction();

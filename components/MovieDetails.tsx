@@ -65,12 +65,15 @@ const MovieDetails = ({
   const [savedForLater, setSavedForLater] = useState<boolean>();
   const [loadTrailer, setLoadTrailer] = useState(false);
 
-  const playBtnClick = () => {
-    setLoadTrailer(true);
-    alert("Clicked");
-  };
+  // const playBtnClick = () => {
+  //   setLoadTrailer(true);
+  //   alert("Clicked");
+  // };
 
-  console.log(loadTrailer);
+  const textToCopy = `https://watchflix-six.vercel.app/discover?${contentType}=${searchParams.get(
+    contentType
+  )}`;
+  // console.log(textToCopy);
 
   const fetchSavedTOList = async () => {
     const isLikedByUser = await isShowLikedByUser({
@@ -234,25 +237,25 @@ const MovieDetails = ({
     setScreenWidth(window.innerWidth);
   };
 
-  const copyUrl = () => {
-    // Get the current URL
-    const currentUrl = window.location.href;
+  // const copyUrl = () => {
+  //   // Get the current URL
+  //   const currentUrl = window.location.href;
 
-    // Create a temporary input element to copy the URL
-    const tempInput = document.createElement("input");
-    tempInput.value = currentUrl;
-    document.body.appendChild(tempInput);
+  //   // Create a temporary input element to copy the URL
+  //   const tempInput = document.createElement("input");
+  //   tempInput.value = currentUrl;
+  //   document.body.appendChild(tempInput);
 
-    // Select the URL text and copy it to the clipboard
-    tempInput.select();
-    document.execCommand("copy");
+  //   // Select the URL text and copy it to the clipboard
+  //   tempInput.select();
+  //   document.execCommand("copy");
 
-    // Remove the temporary input element
-    document.body.removeChild(tempInput);
+  //   // Remove the temporary input element
+  //   document.body.removeChild(tempInput);
 
-    // Optionally, you can provide feedback to the user
-    alert("Current URL copied to clipboard");
-  };
+  //   // Optionally, you can provide feedback to the user
+  //   alert("Current URL copied to clipboard");
+  // };
 
   useEffect(() => {
     // console.log(contentType);
@@ -343,7 +346,11 @@ const MovieDetails = ({
               <div className="flex sm:hidden h-7 bg-gray-500 w-[1px]" />
 
               <div className="flex sm:hidden flex-row gap-2 cursor-pointer">
-                <VideoPlayer showId={showId} mediaType={contentType} />
+                <VideoPlayer
+                  showId={showId}
+                  mediaType={contentType}
+                  path="/discover"
+                />
               </div>
             </div>
 
@@ -377,11 +384,15 @@ const MovieDetails = ({
 
               <div className="movieDetailsIconsParent">
                 {/* <PaperAirplaneIcon className="movieDetailsIcons" /> */}
-                <ShareLink />
+                <ShareLink link={textToCopy} />
               </div>
 
               <div className="hidden sm:flex flex-row gap-2 cursor-pointer">
-                <VideoPlayer showId={showId} mediaType={contentType} />
+                <VideoPlayer
+                  showId={showId}
+                  mediaType={contentType}
+                  path="/discover"
+                />
               </div>
             </div>
           </div>

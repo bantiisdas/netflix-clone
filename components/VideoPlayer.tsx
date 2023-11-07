@@ -30,10 +30,10 @@ import { FaPlay } from "react-icons/fa";
 interface Props {
   showId: string;
   mediaType: string;
-  // showTrailer: boolean;
+  path: string;
 }
 
-const VideoPlayer = ({ showId, mediaType }: Props) => {
+const VideoPlayer = ({ showId, mediaType, path }: Props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
 
@@ -68,46 +68,18 @@ const VideoPlayer = ({ showId, mediaType }: Props) => {
   }, [showId, mediaType]);
 
   return (
-    // <MuiModal
-    //   open={showModal}
-    //   onClose={handleClose}
-    //   className="fixed !top-[20vh] xs:!top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide"
-    // >
-    //   <>
-    //     <button
-    //       onClick={handleClose}
-    //       className="modalButton absolute right-5 top-5 !z-40 h-9 w-9 border-none bg-[#181818] hover:bg-[#181818]"
-    //     >
-    //       <XMarkIcon className="h-6 w-6" />
-    //     </button>
-    //     <div className="relative pt-[56.25%]">
-    //       <ReactPlayer
-    //         url={`https://www.youtube.com/watch?v=${trailer}`}
-    //         width="100%"
-    //         height="100%"
-    //         style={{ position: "absolute", top: "0", left: "0" }}
-    //         playing
-    //         controls
-    //         muted={false}
-    //       />
-    //       <div
-    //         className={`hidden absolute bottom-10  w-full justify-end items-center xs:justify-between px-10`}
-    //       >
-    //         <div className="hidden xs:flex space-x-2">
-    //           <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
-    //             <FaPlay className="xs:h-7 xs:w-7 text-black" />
-    //             Play
-    //           </button>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </>
-    // </MuiModal>
-
     <div>
       <div className="flex flex-row gap-2" onClick={handleOpen}>
-        <PlayIcon className="h-6 w-6 text-white" />
-        <span className="text-white">Play Trailer</span>
+        {path === "/" ? (
+          <>
+            <FaPlay className="h-4 w-4 text-black md:h-7 md:w-7" /> Play
+          </>
+        ) : (
+          <>
+            <PlayIcon className="h-6 w-6 text-white" />
+            <span className="text-white">Play Trailer</span>
+          </>
+        )}
       </div>
       <Modal
         open={open}
