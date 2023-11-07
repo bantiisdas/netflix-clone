@@ -14,6 +14,9 @@ import Modal from "./Modal";
 import { useSearchParams } from "next/navigation";
 import { useColor } from "color-thief-react";
 import {
+  isShowLikedByUser,
+  isShowSavedForLaterByUser,
+  isShowWatchedByUser,
   removeFromLikedList,
   removeFromWatchLaterList,
   removeFromWatchedList,
@@ -34,9 +37,9 @@ interface Props {
   showId: string;
   contentType: string;
   userId: string;
-  isLiked: boolean;
-  isWatched: boolean;
-  isSavedForLater: boolean;
+  isLiked?: boolean;
+  isWatched?: boolean;
+  isSavedForLater?: boolean;
 }
 
 const OMDB_API_KEY = process.env.NEXT_PUBLIC_OMDB_API_KEY;
@@ -48,22 +51,42 @@ const MovieDetails = ({
   showId,
   contentType,
   userId,
-  isLiked,
-  isWatched,
-  isSavedForLater,
 }: Props) => {
   const [omdbData, setOmdbData] = useState<any>();
   // const [showModal, setShowModal] = useRecoilState(modalState);
   // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const searchParams = useSearchParams();
-  const [liked, setLiked] = useState<boolean>(isLiked);
-  const [watched, setWatched] = useState<boolean>(isWatched);
-  const [savedForLater, setSavedForLater] = useState<boolean>(isSavedForLater);
+  const [liked, setLiked] = useState<boolean>();
+  const [watched, setWatched] = useState<boolean>();
+  const [savedForLater, setSavedForLater] = useState<boolean>();
 
   const playBtnClick = () => {
     // setCurrentMovie(show);
     // setShowModal(true);
+  };
+
+  const fetchSavedTOList = async () => {
+    const isLikedByUser = await isShowLikedByUser({
+      userId: userId,
+      showId: showId,
+      type: contentType,
+    });
+    setLiked(isLikedByUser);
+
+    const isWatchedByUser = await isShowWatchedByUser({
+      userId: userId,
+      showId: showId,
+      type: contentType,
+    });
+    setWatched(isWatchedByUser);
+
+    const isSavedLaterByUser = await isShowSavedForLaterByUser({
+      userId: userId,
+      showId: showId,
+      type: contentType,
+    });
+    setSavedForLater(isSavedLaterByUser);
   };
 
   const likeBtnClick = async () => {
@@ -199,6 +222,7 @@ const MovieDetails = ({
     // console.log(contentType);
 
     fetchContentRating();
+    fetchSavedTOList();
 
     window.addEventListener("resize", handleResize);
     return () => {

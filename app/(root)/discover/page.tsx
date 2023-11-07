@@ -53,28 +53,7 @@ export default async function page({ searchParams }: SearchProps) {
 
   const recommendations = await fetchRecommendations(contentType, query);
 
-  const isLikedByUser = await isShowLikedByUser({
-    userId: mongoUser._id,
-    showId: query,
-    type: showDetails.media_type,
-  });
-  const isLiked = isLikedByUser ? true : false;
-
-  const isWatchedByUser = await isShowWatchedByUser({
-    userId: mongoUser._id,
-    showId: query,
-    type: showDetails.media_type,
-  });
-  const isWatched = isWatchedByUser ? true : false;
-
-  const isSavedLaterByUser = await isShowSavedForLaterByUser({
-    userId: mongoUser._id,
-    showId: query,
-    type: showDetails.media_type,
-  });
-  const isSavedForLater = isSavedLaterByUser ? true : false;
-
-  console.log(isLiked);
+  // console.log(isLiked);
 
   return (
     <main className="relative ">
@@ -100,9 +79,6 @@ export default async function page({ searchParams }: SearchProps) {
           showId={query}
           contentType={contentType}
           userId={mongoUser._id}
-          isLiked={isLiked}
-          isWatched={isWatched}
-          isSavedForLater={isSavedForLater}
         />
       </div>
       <div className="relative pt-5 md:pt-7 mt-5 md:mt-8 pl-4 pb-5 lg:pl-16">
@@ -116,9 +92,9 @@ export default async function page({ searchParams }: SearchProps) {
         />
       </div>
 
-      <p>{isLiked ? "Liked" : "Not Liked"}</p>
+      {/* <p>{isLiked ? "Liked" : "Not Liked"}</p>
       <p>{isWatched ? "Watched" : "Not Watched"}</p>
-      <p>{isSavedForLater ? "Saved For Later" : "Not Saved For Later"}</p>
+      <p>{isSavedForLater ? "Saved For Later" : "Not Saved For Later"}</p> */}
     </main>
   );
 }

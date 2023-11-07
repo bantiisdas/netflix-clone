@@ -277,7 +277,8 @@ export async function isShowLikedByUser({
     const isLiked = likedList.shows.find(
       (show: showDetailsProps) => show.showId === showId && show.type === type
     );
-    return isLiked;
+    if (isLiked) return true;
+    else return false;
   } catch (error) {
     throw error;
   }
@@ -307,7 +308,8 @@ export async function isShowWatchedByUser({
     const isWatched = watchedList.shows.find(
       (show: showDetailsProps) => show.showId === showId && show.type === type
     );
-    return isWatched;
+    if (isWatched) return true;
+    else return false;
   } catch (error) {
     throw error;
   }
@@ -337,7 +339,8 @@ export async function isShowSavedForLaterByUser({
     const isWatchLater = watchLaterList.shows.find(
       (show: showDetailsProps) => show.showId === showId && show.type === type
     );
-    return isWatchLater;
+    if (isWatchLater) return true;
+    else return false;
   } catch (error) {
     throw error;
   }
