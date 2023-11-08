@@ -4,8 +4,24 @@ import { FilterQuery, SortOrder } from "mongoose";
 import { revalidatePath } from "next/cache";
 
 import User from "../models/user.model";
+import List from "../models/list.model";
 import { connectToDB } from "../mongoose";
 import path from "path";
+
+export async function getUserById(params: any) {
+  try {
+    connectToDB();
+
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 interface CreateUserParams {
   clerkId: string;
@@ -55,15 +71,27 @@ export async function updateUser(params: UpdateUserParams) {
   }
 }
 
-export async function getUserById(params: any) {
+interface DeleteeUserParams {
+  clerkId: string;
+}
+
+export async function deleteUser(params: DeleteeUserParams) {
   try {
     connectToDB();
 
-    const { userId } = params;
+    const { clerkId } = params;
 
-    const user = await User.findOne({ clerkId: userId });
+    const user = await User.findOne({ clerkId });
+    if (!user) {
+      throw new Error("User not found");
+    }
 
-    return user;
+    await List.deleteMany({ owner: user._id });
+
+    const deletedUser = await User.findByIdAndDelete(user._id);
+    return deletedUser;
+
+    // revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;

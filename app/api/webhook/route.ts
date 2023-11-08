@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createUser, updateUser } from "@/lib/actions/user.actions";
+import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -86,6 +86,17 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ message: "OK", user: mongoUser });
+  }
+
+  if (eventType === "user.deleted") {
+    const { id } = evt.data;
+
+    // Create a new user in your database
+    const deletedUser = await deleteUser({
+      clerkId: id!,
+    });
+
+    return NextResponse.json({ message: "OK", user: deletedUser });
   }
 
   return new Response("", { status: 201 });
