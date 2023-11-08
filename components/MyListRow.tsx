@@ -62,9 +62,11 @@ const MyListRow = ({
   };
 
   return (
-    <div className={`${isEmpty ? "h-5" : "h-40"} space-y-0.5 md:space-y-2`}>
+    <div
+      className={`${isEmpty ? "h-24 lg:h-7" : "h-40"} space-y-0.5 md:space-y-2`}
+    >
       <div className="flex items-center justify-between">
-        <h2 className="w-96 cursor-pointer text-sm font-semibold text-[#e5e5e5] transition duration-200 hover:text-white md:text-2xl">
+        <h2 className="w-96 cursor-pointer text-base font-semibold text-[#e5e5e5] transition duration-200 hover:text-white md:text-2xl">
           {title}
         </h2>
         <button
@@ -77,7 +79,9 @@ const MyListRow = ({
         </button>
       </div>
       {isEmpty ? (
-        <p>{noListMessage}</p>
+        <p className="text-sm md:text-base py-1 md:py-2 px-1 md:px-2">
+          {noListMessage}
+        </p>
       ) : (
         <div className="group relative md:-ml-2">
           <ChevronLeftIcon
