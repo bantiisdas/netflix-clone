@@ -1,3 +1,4 @@
+import EmptyRow from "@/components/EmptyRow";
 import Header from "@/components/Header";
 import MyListRow from "@/components/MyListRow";
 import {
@@ -25,7 +26,9 @@ async function Page() {
   const myWatchLaterList = await fetchWatchLaterListData(mongoUser._id);
   const watchLaterJson = JSON.stringify(myWatchLaterList);
 
-  // console.log(likedListJson);
+  console.log(myLikedList);
+
+  // console.log(myLikedList ? "Yes" : "no");
 
   return (
     <main className="relative">
@@ -35,12 +38,21 @@ async function Page() {
           title="Saved to Watch Later"
           shows={watchLaterJson}
           seeMoreBtn={false}
+          noListMessage="No shows saved for later add one to show here"
         />
-        <MyListRow title="You Liked" shows={likedListJson} seeMoreBtn={false} />
+
+        <MyListRow
+          title="You Liked"
+          shows={likedListJson}
+          seeMoreBtn={false}
+          noListMessage="No shows added to liked add one to show here"
+        />
+
         <MyListRow
           title="You Watched"
           shows={watchedListJson}
           seeMoreBtn={false}
+          noListMessage="No shows marked to watched add one to show here"
         />
       </div>
     </main>

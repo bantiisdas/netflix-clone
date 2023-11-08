@@ -186,7 +186,7 @@ export async function fetchLikedListData(userId: string) {
     const likedList = await List.findById(user.liked);
 
     if (!likedList) {
-      throw new Error("No likedList found for the user");
+      return false;
     }
 
     // Return the shows in the "likedList"
@@ -212,7 +212,7 @@ export async function fetchWatchedListData(userId: string) {
     const watchedList = await List.findById(user.watched);
 
     if (!watchedList) {
-      throw new Error("No watchedList found for the user");
+      return false;
     }
 
     // Return the shows in the "watchedList"
@@ -238,7 +238,7 @@ export async function fetchWatchLaterListData(userId: string) {
     const watchLaterList = await List.findById(user.watchLater);
 
     if (!watchLaterList) {
-      throw new Error("No watchLaterList found for the user");
+      return false;
     }
 
     // Return the shows in the "watchLaterList"
