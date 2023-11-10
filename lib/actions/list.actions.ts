@@ -18,6 +18,21 @@ interface Props {
   showDetails: showDetailsProps;
 }
 
+export async function findListbyId(listId: string) {
+  try {
+    connectToDB();
+    const list = await List.findById(listId);
+
+    if (!list) {
+      throw new Error("List not Found");
+    }
+
+    return list;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function updateToLikedList({ ownerId, showDetails }: Props) {
   try {
     connectToDB();
@@ -169,7 +184,6 @@ export async function updateToWatchLaterList({ ownerId, showDetails }: Props) {
   }
 }
 
-// Function to fetch the data in the "likedList" for a specific user
 export async function fetchLikedListData(userId: string) {
   try {
     // Connect to the database

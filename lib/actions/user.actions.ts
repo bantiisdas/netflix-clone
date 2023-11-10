@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import List from "../models/list.model";
 import { connectToDB } from "../mongoose";
-import path from "path";
 
 export async function getUserById(params: any) {
   try {
@@ -15,6 +14,19 @@ export async function getUserById(params: any) {
     const { userId } = params;
 
     const user = await User.findOne({ clerkId: userId });
+
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserByMongoId(mongoId: string) {
+  try {
+    connectToDB();
+
+    const user = await User.findById(mongoId);
 
     return user;
   } catch (error) {

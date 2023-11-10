@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { RecoilRoot } from "recoil";
-import { GridView } from "@/components";
+import GridView from "@/components/GridView";
 import { Movie } from "@/typing";
 import requests from "@/utils/requests";
 import { Box, LinearProgress } from "@mui/material";
