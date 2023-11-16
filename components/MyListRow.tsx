@@ -5,12 +5,14 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import { ShareLink } from "./ShareLink";
 
 interface Props {
   title: string;
   shows: string;
-  search?: string;
-  seeMoreBtn?: boolean;
+  listId?: string;
+  expandBtn?: boolean;
   noListMessage?: string;
 }
 interface showDetailsProps {
@@ -25,8 +27,8 @@ interface showDetailsProps {
 const MyListRow = ({
   title,
   shows,
-  search,
-  seeMoreBtn,
+  listId,
+  expandBtn,
   noListMessage,
 }: Props) => {
   const router = useRouter();
@@ -63,20 +65,27 @@ const MyListRow = ({
 
   return (
     <div
-      className={`${isEmpty ? "h-24 lg:h-7" : "h-40"} space-y-0.5 md:space-y-2`}
+      className={`${isEmpty ? "h-24 lg:h-7" : "h-40"} space-y-1 md:space-y-2`}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pb-2">
         <h2 className="w-96 cursor-pointer text-base font-semibold text-[#e5e5e5] transition duration-200 hover:text-white md:text-2xl">
           {title}
         </h2>
-        <button
-          className={`${seeMoreBtn === false ? "hidden" : ""} pr-8`}
-          onClick={() => {
-            router.push(`${search}`);
-          }}
-        >
-          See More
-        </button>
+        <div className="flex flex-row gap-4 items-center -mb-1 md:-mb-2">
+          <ShareLink link={`https://watchflix-six.vercel.app/list/${listId}`} />
+          <Link href={`/list/${listId}`} className="">
+            <button
+              className={`${
+                expandBtn === false ? "hidden" : ""
+              } text-[#e5e5e5] hover:text-white text-sm md:text-base font-semibold pr-4`}
+              // onClick={() => {
+              //   router.push(`/list/${listId}`);
+              // }}
+            >
+              Expand
+            </button>
+          </Link>
+        </div>
       </div>
       {isEmpty ? (
         <p className="text-sm md:text-base py-1 md:py-2 px-1 md:px-2">

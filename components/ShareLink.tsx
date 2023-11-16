@@ -1,5 +1,6 @@
-import { Copy } from "lucide-react";
+"use client";
 
+import { Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,7 +24,7 @@ export function ShareLink({ link }: { link: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <PaperAirplaneIcon className="movieDetailsIcons" />
+        <PaperAirplaneIcon className="movieDetailsIcons cursor-pointer" />
       </DialogTrigger>
       <DialogContent className="sm:max-w-md bg-[#141414] bg-opacity-50">
         <DialogHeader>

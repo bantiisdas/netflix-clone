@@ -109,3 +109,22 @@ export async function deleteUser(params: DeleteeUserParams) {
     throw error;
   }
 }
+
+export async function saveList(userId: string, listId: string) {
+  try {
+    connectToDB();
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.hasAccess.push(listId);
+
+    await user.save();
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}

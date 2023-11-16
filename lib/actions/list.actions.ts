@@ -204,7 +204,7 @@ export async function fetchLikedListData(userId: string) {
     }
 
     // Return the shows in the "likedList"
-    return likedList.shows;
+    return likedList;
   } catch (error) {
     throw error;
   }
@@ -230,7 +230,7 @@ export async function fetchWatchedListData(userId: string) {
     }
 
     // Return the shows in the "watchedList"
-    return watchedList.shows;
+    return watchedList;
   } catch (error) {
     throw error;
   }
@@ -256,7 +256,7 @@ export async function fetchWatchLaterListData(userId: string) {
     }
 
     // Return the shows in the "watchLaterList"
-    return watchLaterList.shows;
+    return watchLaterList;
   } catch (error) {
     throw error;
   }

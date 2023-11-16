@@ -18,13 +18,13 @@ async function Page() {
   const mongoUser = await getUserById({ userId });
 
   const myLikedList = await fetchLikedListData(mongoUser._id);
-  const likedListJson = JSON.stringify(myLikedList);
+  const likedListJson = JSON.stringify(myLikedList.shows);
 
   const myWatchedList = await fetchWatchedListData(mongoUser._id);
-  const watchedListJson = JSON.stringify(myWatchedList);
+  const watchedListJson = JSON.stringify(myWatchedList.shows);
 
   const myWatchLaterList = await fetchWatchLaterListData(mongoUser._id);
-  const watchLaterJson = JSON.stringify(myWatchLaterList);
+  const watchLaterJson = JSON.stringify(myWatchLaterList.shows);
 
   console.log(myLikedList);
 
@@ -33,25 +33,28 @@ async function Page() {
   return (
     <main className="relative">
       <Header />
-      <div className="relative pt-5 md:pt-7 mt-20 pl-4 pb-5 md:pb-24 lg:pl-16 lg:space-y-24">
+      <div className="relative pt-5 md:pt-7 mt-20 pl-4 pb-5 md:pb-24 lg:pl-16 space-y-6 lg:space-y-24">
         <MyListRow
           title="Saved to Watch Later"
           shows={watchLaterJson}
-          seeMoreBtn={false}
+          expandBtn={true}
+          listId={myWatchLaterList._id}
           noListMessage="No shows saved for later add one to show here"
         />
 
         <MyListRow
           title="You Liked"
           shows={likedListJson}
-          seeMoreBtn={false}
+          expandBtn={true}
+          listId={myLikedList._id}
           noListMessage="No shows added to liked add one to show here"
         />
 
         <MyListRow
           title="You Watched"
           shows={watchedListJson}
-          seeMoreBtn={false}
+          expandBtn={true}
+          listId={myWatchedList._id}
           noListMessage="No shows marked to watched add one to show here"
         />
       </div>
