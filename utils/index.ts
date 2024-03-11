@@ -1,3 +1,5 @@
+import { list } from "postcss";
+
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 export async function fetchSingleShowDetails(
@@ -73,4 +75,13 @@ export async function fetchRecommendations(contentType: string, query: string) {
   }
 
   return data.results;
+}
+export function getListType(type: string) {
+  const listType =
+    type === "watched"
+      ? "Watched"
+      : type === "watchLater"
+      ? "Saved for later"
+      : type;
+  return listType;
 }

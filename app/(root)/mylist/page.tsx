@@ -1,12 +1,18 @@
 import EmptyRow from "@/components/EmptyRow";
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
 import MyListRow from "@/components/MyListRow";
 import {
   fetchLikedListData,
   fetchWatchLaterListData,
   fetchWatchedListData,
+  findListbyId,
 } from "@/lib/actions/list.actions";
-import { getUserById } from "@/lib/actions/user.actions";
+import {
+  getUserById,
+  getUserByMongoId,
+  isHasOtherLists,
+} from "@/lib/actions/user.actions";
+import { getListType } from "@/utils";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -26,37 +32,63 @@ async function Page() {
   const myWatchLaterList = await fetchWatchLaterListData(mongoUser._id);
   const watchLaterJson = JSON.stringify(myWatchLaterList.shows);
 
-  console.log(myLikedList);
+  // console.log(myWatchLaterList);
 
-  // console.log(myLikedList ? "Yes" : "no");
+  // console.log(myWatchLaterList ? "Yes" : "no");
+
+  const hasOtherLists = await isHasOtherLists(mongoUser._id);
+
+  console.log(hasOtherLists);
 
   return (
     <main className="relative">
-      <Header />
+      {/* <Header /> */}
       <div className="relative pt-5 md:pt-7 mt-20 pl-4 pb-5 md:pb-24 lg:pl-16 space-y-6 lg:space-y-24">
         <MyListRow
           title="Saved to Watch Later"
+          isEmpty={myWatchLaterList ? false : true}
           shows={watchLaterJson}
-          expandBtn={true}
+          expandBtn={myWatchLaterList ? true : false}
           listId={myWatchLaterList._id}
           noListMessage="No shows saved for later add one to show here"
         />
 
         <MyListRow
           title="You Liked"
+          isEmpty={myLikedList ? false : true}
           shows={likedListJson}
-          expandBtn={true}
+          expandBtn={myLikedList ? true : false}
           listId={myLikedList._id}
           noListMessage="No shows added to liked add one to show here"
         />
 
         <MyListRow
           title="You Watched"
+          isEmpty={myWatchedList ? false : true}
           shows={watchedListJson}
-          expandBtn={true}
+          expandBtn={myWatchedList ? true : false}
           listId={myWatchedList._id}
           noListMessage="No shows marked to watched add one to show here"
         />
+
+        <h2>{`${hasOtherLists.length > 0 ? "Other Lists" : "no"}`}</h2>
+
+        {hasOtherLists.length > 0
+          ? hasOtherLists.map(async (other: string) => {
+              const list = await findListbyId(other);
+              const owner = await getUserByMongoId(list.owner);
+              return (
+                <MyListRow
+                  title={`${getListType(list.listType)} By ${owner.name}`}
+                  isEmpty={false}
+                  shows={JSON.stringify(list.shows)}
+                  expandBtn={true}
+                  listId={list._id}
+                  noListMessage="No shows marked to watched add one to show here"
+                />
+              );
+            })
+          : ""}
       </div>
     </main>
   );

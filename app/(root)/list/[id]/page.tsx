@@ -2,9 +2,10 @@ import GridCard from "@/components/GridCard";
 import Header from "@/components/Header";
 import SaveListBtn from "@/components/SaveListBtn";
 import { ShareLink } from "@/components/ShareLink";
-import { findListbyId } from "@/lib/actions/list.actions";
+import { findListbyId, isInOtherLists } from "@/lib/actions/list.actions";
 import { getUserById, getUserByMongoId } from "@/lib/actions/user.actions";
 import { auth } from "@clerk/nextjs";
+import console from "console";
 import { redirect } from "next/navigation";
 
 interface showDetailsProps {
@@ -26,6 +27,13 @@ const page = async ({ params }: { params: { id: string } }) => {
   const sameUser = list.owner.toString() === mongoUser._id.toString();
 
   const otherUser = await getUserByMongoId(list.owner);
+
+  // const isSaved = await isInOtherLists({
+  //   userId: mongoUser._id,
+  //   listId: list._id,
+  // });
+
+  // console.log(isSaved);
 
   const listType =
     list.listType === "liked"
@@ -50,8 +58,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           </h1>
           <div className="flex flex-row items-center justify-center md:gap-2 pr-2 md:pr-4 -mb-2">
             <SaveListBtn
-              BtnText="Save this list"
-              hidden={false}
+              hidden={sameUser ? true : false}
               userId={mongoUser._id}
               listId={params.id}
             />

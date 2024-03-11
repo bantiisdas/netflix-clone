@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import List from "../models/list.model";
 import { connectToDB } from "../mongoose";
+import { findListbyId } from "./list.actions";
 
 export async function getUserById(params: any) {
   try {
@@ -120,10 +121,32 @@ export async function saveList(userId: string, listId: string) {
       throw new Error("User not found");
     }
 
-    user.hasAccess.push(listId);
+    user.otherLists.push(listId);
+
+    const list = await findListbyId(listId);
+
+    list.hasAcess.push(userId);
 
     await user.save();
+    await list.save();
     return true;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function isHasOtherLists(userId: string) {
+  try {
+    connectToDB();
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const hasOtherlist = user.otherLists;
+
+    return hasOtherlist;
   } catch (error) {
     throw error;
   }

@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema({
       ref: "List",
     },
   ],
+  otherLists: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "List",
+    },
+  ],
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

@@ -3,6 +3,8 @@
 import { saveList } from "@/lib/actions/user.actions";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { isInOtherLists, removeOtherList } from "@/lib/actions/list.actions";
 
 interface Props {
   BtnText?: string;
@@ -12,18 +14,44 @@ interface Props {
 }
 
 const SaveListBtn = ({ BtnText, hidden, userId, listId }: Props) => {
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    const savedOrNot = async () => {
+      const saved = await isInOtherLists({
+        userId: userId,
+        listId: listId,
+      });
+      setIsSaved(saved ? true : false);
+    };
+    savedOrNot();
+  }, []);
+
   const handleClick = async () => {
-    const listSaved = await saveList(userId, listId);
-    if (listSaved) {
-      toast.success("List saved successfully");
+    if (isSaved) {
+      const remove = await removeOtherList({ userId: userId, listId: listId });
+      if (remove) {
+        setIsSaved(false);
+        toast.success("List removed successfully");
+      } else {
+        toast.warning("Failed to remove the list");
+      }
     } else {
-      toast.warning("Failed to save the list");
+      const listSaved = await saveList(userId, listId);
+      if (listSaved) {
+        setIsSaved(true);
+        toast.success("List saved successfully");
+      } else {
+        toast.warning("Failed to save the list");
+      }
     }
   };
 
   return (
     <div className={`${hidden ? "hidden" : ""} `} onClick={handleClick}>
-      <Button className="text-sm md:text-base font-semibold">{BtnText}</Button>
+      <Button className="text-sm md:text-base font-semibold">
+        {isSaved ? "Remove this List" : "Save this List"}
+      </Button>
     </div>
   );
 };

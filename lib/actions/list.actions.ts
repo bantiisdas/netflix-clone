@@ -477,3 +477,49 @@ export async function removeFromWatchLaterList({
     throw error;
   }
 }
+
+export async function isInOtherLists({
+  userId,
+  listId,
+}: {
+  userId: string;
+  listId: string;
+}) {
+  try {
+    connectToDB();
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const list = user.otherLists.find((list) => list.equals(listId));
+
+    if (list) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function removeOtherList({
+  userId,
+  listId,
+}: {
+  userId: string;
+  listId: string;
+}) {
+  try {
+    // Remove list id from otherLists in userSchema
+    await User.updateOne({ _id: userId }, { $pull: { otherLists: listId } });
+
+    // Remove user id from hasAccess in listSchema
+    await List.updateOne({ _id: listId }, { $pull: { hasAcess: userId } });
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}

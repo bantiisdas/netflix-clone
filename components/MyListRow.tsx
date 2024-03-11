@@ -2,7 +2,7 @@
 
 import { Movie } from "@/typing";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import { ShareLink } from "./ShareLink";
 
 interface Props {
   title: string;
+  isEmpty: boolean;
   shows: string;
   listId?: string;
   expandBtn?: boolean;
@@ -26,6 +27,7 @@ interface showDetailsProps {
 
 const MyListRow = ({
   title,
+  isEmpty,
   shows,
   listId,
   expandBtn,
@@ -37,11 +39,19 @@ const MyListRow = ({
   const [isMoved, setIsMoved] = useState(false);
   const [isAtFirst, setiIsAtFirst] = useState(false);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  const [showDetails, setShowDetails] = useState([]);
   // console.log(shows);
+  useEffect(() => {
+    if (!isEmpty) {
+      setShowDetails(JSON.parse(shows));
+    }
+  }, []);
 
-  const showDetails = JSON.parse(shows);
-  const isEmpty = showDetails.length === 0 || showDetails === false;
-  // console.log(isEmpty);
+  // console.log(showDetails);
+
+  // const showDetails = JSON.parse(shows);
+  // const isEmpty = showDetails.length === 0 || showDetails === false;
+  console.log(isEmpty + " check");
 
   const handleClick = (direction: String) => {
     setIsMoved(true);
