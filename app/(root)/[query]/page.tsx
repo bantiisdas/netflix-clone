@@ -23,29 +23,32 @@ export default function Page() {
   const [totalItems, setTotalItems] = useState(0);
 
   const fetchMovies = async () => {
-    const response = await fetch(requests[query] + `&page=${page}`);
-    const data = await response.json();
-    if (
-      queryResult === "sciFiFantTv" ||
-      queryResult === "actionTv" ||
-      queryResult === "warPoliticsTv" ||
-      queryResult === "crimeTv" ||
-      queryResult === "animatedTv" ||
-      queryResult === "mysteryTv" ||
-      queryResult === "comedyTv"
-    ) {
-      data.results.forEach((item: Movie) => {
-        item.media_type = "tv";
-      });
-    }
-    // console.log(data.results);
-    setTotalItems(data.total_results);
-    // console.log(data.total_results);
+    const q = requests[query];
+    if (q) {
+      const response = await fetch(q[0] + `&page=${page}`);
+      const data = await response.json();
+      if (
+        queryResult === "sciFiFantTv" ||
+        queryResult === "actionTv" ||
+        queryResult === "warPoliticsTv" ||
+        queryResult === "crimeTv" ||
+        queryResult === "animatedTv" ||
+        queryResult === "mysteryTv" ||
+        queryResult === "comedyTv"
+      ) {
+        data.results.forEach((item: Movie) => {
+          item.media_type = "tv";
+        });
+      }
+      // console.log(data.results);
+      setTotalItems(data.total_results);
+      // console.log(data.total_results);
 
-    if (page === 1) {
-      setMovies(data.results);
-    } else {
-      setMovies((prevMovies) => [...prevMovies, ...data.results]);
+      if (page === 1) {
+        setMovies(data.results);
+      } else {
+        setMovies((prevMovies) => [...prevMovies, ...data.results]);
+      }
     }
   };
 
@@ -63,7 +66,7 @@ export default function Page() {
   }, [pathname, searchParams, query, page]);
 
   //  console.log(query);
-  console.log(movies);
+  // console.log(movies);
 
   return (
     <RecoilRoot>

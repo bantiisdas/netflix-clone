@@ -12,7 +12,7 @@ const BasicMenu = () => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    console.log(anchorEl);
+    // console.log(anchorEl);
     setAnchorEl(null);
   };
 

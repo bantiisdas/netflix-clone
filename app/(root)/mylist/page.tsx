@@ -1,5 +1,5 @@
 import EmptyRow from "@/components/EmptyRow";
-// import Header from "@/components/Header";
+import Header from "@/components/Header";
 import MyListRow from "@/components/MyListRow";
 import {
   fetchLikedListData,
@@ -42,7 +42,7 @@ async function Page() {
 
   return (
     <main className="relative">
-      {/* <Header /> */}
+      <Header />
       <div className="relative pt-5 md:pt-7 mt-20 pl-4 pb-5 md:pb-24 lg:pl-16 space-y-6 lg:space-y-24">
         <MyListRow
           title="Saved to Watch Later"

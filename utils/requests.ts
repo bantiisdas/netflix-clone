@@ -44,7 +44,6 @@ const requests: Requests = {
     `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=99`,
     "Documentaries",
   ],
-
   fetchSciFiMovies: [
     `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=878`,
     "Sci-Fi Movies",
